@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Reference: https://material.io/develop/android/components/bottom-navigation-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ab_nav_home"
+        android:icon="@drawable/ic_home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/ab_nav_list"
+        android:icon="@drawable/ic_list_24"
+        android:title="View User Reports" />
+</menu>
