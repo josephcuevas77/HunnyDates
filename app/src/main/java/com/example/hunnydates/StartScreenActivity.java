@@ -11,6 +11,5 @@ public class StartScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.start_screen);
         setContentView(R.layout.admin_home_screen);
-//        This is  acomment
     }
 }
