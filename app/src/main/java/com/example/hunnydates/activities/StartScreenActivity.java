@@ -12,6 +12,7 @@ public class StartScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.start_screen);
+        //Zero Two - would smash
         setContentView(R.layout.admin_home_screen);
     }
 }
