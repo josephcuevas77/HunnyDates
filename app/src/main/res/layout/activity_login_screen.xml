@@ -7,7 +7,7 @@
     tools:context=".activities.LoginScreen">
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/signInButton"
+        android:id="@+id/googleSignInButton"
         android:layout_width="152dp"
         android:layout_height="73dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,8 +21,25 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="Hunny Dates"
-        app:layout_constraintBottom_toTopOf="@+id/signInButton"
+        app:layout_constraintBottom_toTopOf="@+id/googleSignInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/signOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="153dp"
+        android:layout_marginLeft="153dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginRight="154dp"
+        android:layout_marginBottom="230dp"
+        android:text="Sign Out"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/googleSignInButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
