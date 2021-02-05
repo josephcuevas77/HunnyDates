@@ -1,0 +1,2 @@
+Only for project structure.
+Delete after a adapter has been added.

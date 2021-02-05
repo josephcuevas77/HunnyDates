@@ -1,0 +1,2 @@
+Only for project structure.
+Delete after a fragment has been added.

@@ -1,0 +1,2 @@
+Only for project structure.
+Delete after a utils has been added.
