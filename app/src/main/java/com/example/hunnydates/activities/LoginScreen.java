@@ -31,7 +31,7 @@ import java.net.URI;
 public class LoginScreen extends AppCompatActivity {
 private SignInButton signInButton;
 private GoogleSignInClient mGoogleSignInClient;
-private String TAG = "LoginScreenActivity";
+private String TAG = "LoginScreen";
 private FirebaseAuth mAuth;
 private Button btnSignOut;
 private int RC_SIGN_IN = 1;
@@ -76,10 +76,10 @@ private int RC_SIGN_IN = 1;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    if(requestCode == RC_SIGN_IN){
-        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        handleSignInResult(task);
-    }
+        if(requestCode == RC_SIGN_IN){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
