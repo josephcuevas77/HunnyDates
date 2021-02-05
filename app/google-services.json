@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "514774398421",
+    "project_id": "hunnydates-b62c4",
+    "storage_bucket": "hunnydates-b62c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514774398421:android:ce9d8608ba945b8592395c",
+        "android_client_info": {
+          "package_name": "com.example.hunnydates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514774398421-esgf8lvun4a7gkmi9f230ft1ukvls3th.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG2wC0H3cQXANhQJhD0YEYGeeUTn5N2DU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514774398421-esgf8lvun4a7gkmi9f230ft1ukvls3th.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
