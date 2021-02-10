@@ -1,6 +1,11 @@
-package com.example.hunnydates;
+package com.example.hunnydates.utils;
 
 import android.net.Uri;
+
+/**
+ * Current User: Singleton Class
+ * Only one instance of Current User is required.
+ */
 
 public final class CurrentUser {
     private static CurrentUser currentUser = new CurrentUser();

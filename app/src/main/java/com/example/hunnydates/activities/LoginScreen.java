@@ -5,13 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.hunnydates.CurrentUser;
+import com.example.hunnydates.utils.CurrentUser;
 import com.example.hunnydates.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,19 +29,16 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginScreen extends AppCompatActivity {
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private String TAG = "LoginScreen";
     private FirebaseAuth mAuth;
-    private Button btnSignOut;
     private int RC_SIGN_IN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_screen);
+        setContentView(R.layout.login_screen);
 
         signInButton = findViewById(R.id.googleSignInButton);
         mAuth = FirebaseAuth.getInstance();
-        btnSignOut = findViewById(R.id.signOutButton);
 
         GoogleSignInOptions googleSIO = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -58,14 +54,9 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mGoogleSignInClient.signOut();
-                Toast.makeText(LoginScreen.this, "User has logged out", Toast.LENGTH_LONG).show();
-                btnSignOut.setVisibility(View.INVISIBLE);
-            }
-        });
+        if(GoogleSignIn.getLastSignedInAccount(getApplicationContext()) != null) {
+            signIn();
+        }
     }
     private void signIn(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -84,7 +75,6 @@ public class LoginScreen extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
         try{
             GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
-            Toast.makeText(LoginScreen.this, "Signed In Successfully", Toast.LENGTH_LONG).show();
             FirebaseGoogleAuth(acc);
         }
         catch (ApiException e){
@@ -100,12 +90,12 @@ public class LoginScreen extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(LoginScreen.this, "Successful", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(LoginScreen.this, "Successful", Toast.LENGTH_LONG).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                         loginToHunnyDates(user);
                     }
                     else{
-                        Toast.makeText(LoginScreen.this, "Unsuccessful", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(LoginScreen.this, "Unsuccessful", Toast.LENGTH_LONG).show();
                         loginToHunnyDates(null);
                     }
                 }
@@ -114,13 +104,11 @@ public class LoginScreen extends AppCompatActivity {
         else{
             Toast.makeText(LoginScreen.this, "Failed to access account.", Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void loginToHunnyDates(FirebaseUser fUser){
-        btnSignOut.setVisibility(View.VISIBLE);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-        if(account != null){
+        if(fUser != null){
             CurrentUser.getInstance().setDisplayName(account.getDisplayName());
             CurrentUser.getInstance().setGivenName(account.getGivenName());
             CurrentUser.getInstance().setFamilyName(account.getFamilyName());
