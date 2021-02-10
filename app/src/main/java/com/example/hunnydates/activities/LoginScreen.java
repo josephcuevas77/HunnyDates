@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.hunnydates.CurrentUser;
 import com.example.hunnydates.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,15 +27,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.net.URI;
-
 public class LoginScreen extends AppCompatActivity {
-private SignInButton signInButton;
-private GoogleSignInClient mGoogleSignInClient;
-private String TAG = "LoginScreen";
-private FirebaseAuth mAuth;
-private Button btnSignOut;
-private int RC_SIGN_IN = 1;
+    private SignInButton signInButton;
+    private GoogleSignInClient mGoogleSignInClient;
+    private String TAG = "LoginScreen";
+    private FirebaseAuth mAuth;
+    private Button btnSignOut;
+    private int RC_SIGN_IN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ private int RC_SIGN_IN = 1;
             @Override
             public void onClick(View view) {
                 mGoogleSignInClient.signOut();
-                Toast.makeText(LoginScreen.this, "User has logged out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginScreen.this, "User has logged out", Toast.LENGTH_LONG).show();
                 btnSignOut.setVisibility(View.INVISIBLE);
             }
         });
@@ -85,11 +84,11 @@ private int RC_SIGN_IN = 1;
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
         try{
             GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
-            Toast.makeText(LoginScreen.this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginScreen.this, "Signed In Successfully", Toast.LENGTH_LONG).show();
             FirebaseGoogleAuth(acc);
         }
         catch (ApiException e){
-            Toast.makeText(LoginScreen.this, "Sign In Unsuccessful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginScreen.this, "Sign In Unsuccessful", Toast.LENGTH_LONG).show();
             FirebaseGoogleAuth(null);
         }
     }
@@ -101,36 +100,36 @@ private int RC_SIGN_IN = 1;
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(LoginScreen.this, "Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginScreen.this, "Successful", Toast.LENGTH_LONG).show();
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                        loginToHunnyDates(user);
                     }
                     else{
-                        Toast.makeText(LoginScreen.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
-                        updateUI(null);
+                        Toast.makeText(LoginScreen.this, "Unsuccessful", Toast.LENGTH_LONG).show();
+                        loginToHunnyDates(null);
                     }
                 }
             });
         }
         else{
-            Toast.makeText(LoginScreen.this, "acc failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginScreen.this, "Failed to access account.", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private void updateUI(FirebaseUser fUser){
+    private void loginToHunnyDates(FirebaseUser fUser){
         btnSignOut.setVisibility(View.VISIBLE);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if(account != null){
-            String personName = account.getDisplayName();
-            String personGivenName = account.getGivenName();
-            String personFamilyName = account.getFamilyName();
-            String personEmail = account.getEmail();
-            String personId = account.getId();
-            Uri personPhoto = account.getPhotoUrl();
+            CurrentUser.getInstance().setDisplayName(account.getDisplayName());
+            CurrentUser.getInstance().setGivenName(account.getGivenName());
+            CurrentUser.getInstance().setFamilyName(account.getFamilyName());
+            CurrentUser.getInstance().setEmail(account.getEmail());
+            CurrentUser.getInstance().setAccountID(account.getId());
+            CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
 
-            Toast.makeText(LoginScreen.this, personName + personEmail, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ClientHomeScreen.class);
+            startActivity(intent);
         }
-
     }
 }
