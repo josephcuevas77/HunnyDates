@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph"
+    app:startDestination="@id/loginScreen">
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="com.example.hunnydates.fragments.LoginScreen"
+        android:label="LoginScreen" >
+        <action
+            android:id="@+id/action_loginScreen_to_clientHomeScreen2"
+            app:destination="@id/clientHomeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/clientHomeScreen"
+        android:name="com.example.hunnydates.fragments.ClientHomeScreen"
+        android:label="ClientHomeScreen" >
+        <action
+            android:id="@+id/action_clientHomeScreen2_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+</navigation>
