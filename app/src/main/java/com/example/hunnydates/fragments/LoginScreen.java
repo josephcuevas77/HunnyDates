@@ -6,7 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,6 +145,10 @@ public class LoginScreen extends Fragment {
     }
 
     private void loginToHunnyDates(FirebaseUser fUser){
+//        Set to true to skip the login process.
+//        Otherwise, set to false.
+        boolean debugging = false;
+
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
         if(fUser != null){
             CurrentUser.getInstance().setDisplayName(account.getDisplayName());
@@ -152,7 +158,12 @@ public class LoginScreen extends Fragment {
             CurrentUser.getInstance().setAccountID(account.getId());
             CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
 
-            Navigation.findNavController(getView()).navigate(R.id.clientHomeScreen);
+            NavHostFragment.findNavController(this).navigate(R.id.clientHomeScreen);
+        }
+
+        if(debugging) {
+//            Navigation.findNavController(getView()).navigate(R.id.clientHomeScreen);
+            NavHostFragment.findNavController(this).navigate(R.id.clientHomeScreen);
         }
     }
 }

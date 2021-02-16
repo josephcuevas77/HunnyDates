@@ -59,7 +59,7 @@
             android:text="Logout" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
+            android:id="@+id/ch_bottom_navigation_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/BottomNavBar"

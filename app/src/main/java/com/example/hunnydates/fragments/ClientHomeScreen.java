@@ -5,8 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +40,8 @@ public class ClientHomeScreen extends Fragment {
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
 
+    private BottomNavigationView bottomNavigationView;
+
     public ClientHomeScreen() {
         // Required empty public constructor
     }
@@ -48,7 +53,7 @@ public class ClientHomeScreen extends Fragment {
      * @return A new instance of fragment ClientHomeScreen.
      */
     // TODO: Rename and change types and number of parameters
-    public static ClientHomeScreen newInstance(String param1, String param2) {
+    public static ClientHomeScreen newInstance() {
         ClientHomeScreen fragment = new ClientHomeScreen();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -100,6 +105,8 @@ public class ClientHomeScreen extends Fragment {
             }
         });
 
+        bottomNavigationView = view.findViewById(R.id.ch_bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         return view;
     }
 
@@ -112,4 +119,28 @@ public class ClientHomeScreen extends Fragment {
                     }
                 });
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            // By using switch we can easily get
+            // the selected fragment
+            // by using there id.
+            Fragment selectedFragment = null;
+            switch (item.getItemId()) {
+                case R.id.cb_nav_home:
+                    NavHostFragment.findNavController(getParentFragment()).navigate(R.id.loginScreen);
+                    break;
+                case R.id.cb_nav_matches:
+                    break;
+                case R.id.cb_nav_search:
+                    break;
+                case R.id.cb_nav_create:
+                    break;
+                case R.id.cb_nav_list:
+                    break;
+            }
+            return true;
+        }
+    };
 }
