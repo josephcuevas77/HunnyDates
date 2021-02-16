@@ -31,16 +31,16 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LoginScreen#newInstance} factory method to
+ * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginScreen extends Fragment {
+public class LoginFragment extends Fragment {
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private int RC_SIGN_IN = 1;
 
-    public LoginScreen() {
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -51,8 +51,8 @@ public class LoginScreen extends Fragment {
      * @return A new instance of fragment LoginScreen.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoginScreen newInstance(String param1, String param2) {
-        LoginScreen fragment = new LoginScreen();
+    public static LoginFragment newInstance(String param1, String param2) {
+        LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -63,9 +63,6 @@ public class LoginScreen extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-
-
-
     }
 
     @Override
@@ -156,12 +153,12 @@ public class LoginScreen extends Fragment {
             CurrentUser.getInstance().setAccountID(account.getId());
             CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
 
-            NavHostFragment.findNavController(this).navigate(R.id.clientHomeScreen);
+            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientDisplayFragment);
         }
 
         if(debugging) {
 //            Navigation.findNavController(getView()).navigate(R.id.clientHomeScreen);
-            NavHostFragment.findNavController(this).navigate(R.id.clientHomeScreen);
+            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientDisplayFragment);
         }
     }
 }

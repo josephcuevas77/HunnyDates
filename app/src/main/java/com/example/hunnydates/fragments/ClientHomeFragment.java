@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,10 +29,10 @@ import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ClientHomeScreen#newInstance} factory method to
+ * Use the {@link ClientHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClientHomeScreen extends Fragment {
+public class ClientHomeFragment extends Fragment {
 
     private ImageView profileImage;
     private TextView profileName;
@@ -42,7 +42,7 @@ public class ClientHomeScreen extends Fragment {
 
     private BottomNavigationView bottomNavigationView;
 
-    public ClientHomeScreen() {
+    public ClientHomeFragment() {
         // Required empty public constructor
     }
 
@@ -53,8 +53,8 @@ public class ClientHomeScreen extends Fragment {
      * @return A new instance of fragment ClientHomeScreen.
      */
     // TODO: Rename and change types and number of parameters
-    public static ClientHomeScreen newInstance() {
-        ClientHomeScreen fragment = new ClientHomeScreen();
+    public static ClientHomeFragment newInstance() {
+        ClientHomeFragment fragment = new ClientHomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -101,11 +101,12 @@ public class ClientHomeScreen extends Fragment {
 //                mGoogleSignInClient.revokeAccess();
                 signOut();
 
-                Navigation.findNavController(getView()).navigate(R.id.loginScreen);
+                Navigation.findNavController(getView()).navigate(R.id.action_loginScreen_to_clientDisplayFragment);
             }
         });
 
-//        bottomNavigationView = view.findViewById(R.id.ch_bottom_navigation_view);
+        bottomNavigationView = view.findViewById(R.id.cd_bottom_navigation_view);
+        NavigationUI.setupWithNavController(bottomNavigationView, NavHostFragment.findNavController(this));
 //        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         return view;
     }
@@ -120,27 +121,4 @@ public class ClientHomeScreen extends Fragment {
                 });
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            // By using switch we can easily get
-            // the selected fragment
-            // by using there id.
-            Fragment selectedFragment = null;
-            switch (item.getItemId()) {
-                case R.id.cb_nav_home:
-                    NavHostFragment.findNavController(getParentFragment()).navigate(R.id.loginScreen);
-                    break;
-                case R.id.cb_nav_matches:
-                    break;
-                case R.id.cb_nav_search:
-                    break;
-                case R.id.cb_nav_create:
-                    break;
-                case R.id.cb_nav_list:
-                    break;
-            }
-            return true;
-        }
-    };
 }

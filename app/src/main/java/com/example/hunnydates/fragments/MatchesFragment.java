@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 
 import com.example.hunnydates.R;
 
-public class MatchesScreen extends Fragment {
+public class MatchesFragment extends Fragment {
 
-    public MatchesScreen() {
+    public MatchesFragment() {
     }
 
-    public static MatchesScreen newInstance(String param1, String param2) {
-        MatchesScreen fragment = new MatchesScreen();
+    public static MatchesFragment newInstance(String param1, String param2) {
+        MatchesFragment fragment = new MatchesFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
