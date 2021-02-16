@@ -144,6 +144,12 @@ public class LoginFragment extends Fragment {
 //        Otherwise, set to false.
         boolean debugging = false;
 
+        if(debugging) {
+//            Navigation.findNavController(getView()).navigate(R.id.clientHomeScreen);
+            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
+            return;
+        }
+
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
         if(fUser != null){
             CurrentUser.getInstance().setDisplayName(account.getDisplayName());
@@ -153,12 +159,8 @@ public class LoginFragment extends Fragment {
             CurrentUser.getInstance().setAccountID(account.getId());
             CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
 
-            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientDisplayFragment);
+            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
         }
 
-        if(debugging) {
-//            Navigation.findNavController(getView()).navigate(R.id.clientHomeScreen);
-            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientDisplayFragment);
-        }
     }
 }

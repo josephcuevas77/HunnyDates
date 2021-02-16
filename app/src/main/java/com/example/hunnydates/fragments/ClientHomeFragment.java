@@ -40,8 +40,6 @@ public class ClientHomeFragment extends Fragment {
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
 
-    private BottomNavigationView bottomNavigationView;
-
     public ClientHomeFragment() {
         // Required empty public constructor
     }
@@ -101,13 +99,9 @@ public class ClientHomeFragment extends Fragment {
 //                mGoogleSignInClient.revokeAccess();
                 signOut();
 
-                Navigation.findNavController(getView()).navigate(R.id.action_loginScreen_to_clientDisplayFragment);
+                getActivity().finish();
             }
         });
-
-        bottomNavigationView = view.findViewById(R.id.cd_bottom_navigation_view);
-        NavigationUI.setupWithNavController(bottomNavigationView, NavHostFragment.findNavController(this));
-//        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         return view;
     }
 

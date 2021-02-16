@@ -33,8 +33,6 @@ import com.squareup.picasso.Picasso;
  */
 public class ClientDisplayFragment extends Fragment {
 
-    private BottomNavigationView bottomNavigationView;
-
     public ClientDisplayFragment() {
         // Required empty public constructor
     }
@@ -65,9 +63,6 @@ public class ClientDisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.client_display, container, false);
 
-        bottomNavigationView = view.findViewById(R.id.cd_bottom_navigation_view);
-        NavigationUI.setupWithNavController(bottomNavigationView, NavHostFragment.findNavController(this));
-//        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         return view;
     }
 

@@ -11,21 +11,13 @@
         android:name="com.example.hunnydates.fragments.LoginFragment"
         android:label="LoginScreen" >
         <action
-            android:id="@+id/action_loginScreen_to_clientDisplayFragment"
-            app:destination="@id/client_navigation" />
+            android:id="@+id/action_loginScreen_to_clientActivity"
+            app:destination="@id/clientActivity" />
     </fragment>
-
-    <navigation android:id="@+id/client_navigation"
-        app:startDestination="@id/clientDisplayFragment">
-        <fragment
-            android:id="@+id/clientDisplayFragment"
-            android:name="com.example.hunnydates.fragments.ClientDisplayFragment"
-            android:label="ClientDisplayFragment"
-            tools:layout="@layout/client_display">
-            <action
-                android:id="@+id/action_clientDisplayFragment_to_loginScreen"
-                app:destination="@id/loginScreen" />
-        </fragment>
-    </navigation>
+    <activity
+        android:id="@+id/clientActivity"
+        android:name="com.example.hunnydates.activities.ClientActivity"
+        android:label="ClientActivity"
+        tools:layout="@layout/client_display" />
 
 </navigation>
