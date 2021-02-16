@@ -105,8 +105,8 @@ public class ClientHomeScreen extends Fragment {
             }
         });
 
-        bottomNavigationView = view.findViewById(R.id.ch_bottom_navigation_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+//        bottomNavigationView = view.findViewById(R.id.ch_bottom_navigation_view);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         return view;
     }
 
