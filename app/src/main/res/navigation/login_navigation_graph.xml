@@ -13,11 +13,19 @@
         <action
             android:id="@+id/action_loginScreen_to_clientActivity"
             app:destination="@id/clientActivity" />
+        <action
+            android:id="@+id/action_loginScreen_to_adminActivity"
+            app:destination="@id/adminActivity" />
     </fragment>
     <activity
         android:id="@+id/clientActivity"
         android:name="com.example.hunnydates.activities.ClientActivity"
         android:label="ClientActivity"
         tools:layout="@layout/client_display" />
+    <activity
+        android:id="@+id/adminActivity"
+        android:name="com.example.hunnydates.activities.AdminActivity"
+        android:label="AdminActivity"
+        tools:layout="@layout/admin_display" />
 
 </navigation>

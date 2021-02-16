@@ -159,8 +159,13 @@ public class LoginFragment extends Fragment {
             CurrentUser.getInstance().setAccountID(account.getId());
             CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
 
-            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
+            switch (account.getEmail()) {
+                case "hunnydates.official@gmail.com":
+                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_adminActivity);
+                    break;
+                default:
+                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
+            }
         }
-
     }
 }
