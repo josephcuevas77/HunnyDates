@@ -70,7 +70,7 @@ public class ClientHomeScreen extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.client_home_screen, container, false);
+        View view = inflater.inflate(R.layout.client_home, container, false);
 
         profileImage = view.findViewById(R.id.ch_profile_icon);
         profileName = view.findViewById(R.id.ch_profile_name);

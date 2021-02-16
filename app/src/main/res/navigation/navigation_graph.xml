@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginScreen"
-        tools:layout="@layout/login_screen"
+        tools:layout="@layout/hunny_dates_login"
         android:name="com.example.hunnydates.fragments.LoginScreen"
         android:label="LoginScreen" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/clientHomeScreen"
-        tools:layout="@layout/client_home_screen"
+        tools:layout="@layout/client_home"
         android:name="com.example.hunnydates.fragments.ClientHomeScreen"
         android:label="ClientHomeScreen" >
         <action

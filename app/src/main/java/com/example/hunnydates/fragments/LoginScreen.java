@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavHost;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -73,7 +71,7 @@ public class LoginScreen extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_screen, container, false);
+        View view = inflater.inflate(R.layout.hunny_dates_login, container, false);
         signInButton = view.findViewById(R.id.googleSignInButton);
         mAuth = FirebaseAuth.getInstance();
 
