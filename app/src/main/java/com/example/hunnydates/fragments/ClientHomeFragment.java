@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +50,7 @@ public class ClientHomeFragment extends Fragment {
     private Button editProfileButton;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseFirestore adminDatabase;
 
     public ClientHomeFragment() {
         // Required empty public constructor
@@ -70,49 +82,85 @@ public class ClientHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.client_home, container, false);
 
+        initializeComponents(view);
+        initializeGoogleSignIn();
+        displayProfileImage();
+
+        editProfileButton.setOnClickListener(editProfileButtonListener);
+        logoutButton.setOnClickListener(logoutButtonListener);
+
+        performDatabaseActions();
+
+        return view;
+    }
+
+    private void initializeComponents(View view) {
         profileImage = view.findViewById(R.id.ch_profile_icon);
         profileName = view.findViewById(R.id.ch_profile_name);
         editProfileButton = view.findViewById(R.id.ch_edit_profile_button);
         logoutButton = view.findViewById(R.id.ch_logout_button);
+    }
 
-        Picasso.get().load(CurrentUser.getInstance().getPhotoURL()).into(profileImage);
-        profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
-
+    private void initializeGoogleSignIn() {
         GoogleSignInOptions googleSIO = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSIO);
+    }
 
-        editProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Editing Profile Info", Toast.LENGTH_LONG).show();
-            }
-        });
+    private void displayProfileImage() {
+        Picasso.get().load(CurrentUser.getInstance().getPhotoURL()).into(profileImage);
+        profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
+    }
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
+    private View.OnClickListener editProfileButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity(), "Editing Profile Info", Toast.LENGTH_LONG).show();
+        }
+    };
+
+    private View.OnClickListener logoutButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            FirebaseAuth.getInstance().signOut();
 //                mGoogleSignInClient.revokeAccess();
-                signOut();
+            mGoogleSignInClient.signOut();
 
-                getActivity().finish();
-            }
-        });
-        return view;
+            getActivity().finish();
+        }
+    };
+
+    private void performDatabaseActions() {
+//        adminDatabase = FirebaseFirestore.getInstance();
+//        CollectionReference adminDB = adminDatabase.collection("Admin");
+//
+//        Map<String, Object> data1 = new HashMap<>();
+//        data1.put("email", CurrentUser.getInstance().getEmail());
+//        data1.put("id", "999999");
+//        data1.put("userName", "Hunny123");
+//        adminDB.document("Admin").set(data1, SetOptions.merge());
+//
+//        DocumentReference docRef = adminDatabase.collection("Admin").document("Admin");
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        Log.d(TAG, "Document data: " + document.getData());
+//                        adminEmail.setText("Email:" + document.getString("email"));
+//                        adminID.setText("ID:" + document.getString("id"));
+//                        adminUN.setText("User Name" + document.getString("userName"));
+//                    } else {
+//                        Log.d(TAG, "No such document");
+//                    }
+//                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+//                }
+//            }
+//        });
     }
-
-    private void signOut() {
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                    }
-                });
-    }
-
 }

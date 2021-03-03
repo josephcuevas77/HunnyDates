@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,7 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +42,7 @@ public class AdminHomeFragment extends Fragment {
     private TextView profileName;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseFirestore db;
+    private FirebaseFirestore adminDatabase;
     private TextView adminEmail;
     private TextView adminID;
     private TextView adminUN;
@@ -94,8 +92,8 @@ public class AdminHomeFragment extends Fragment {
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSIO);
 
-        db = FirebaseFirestore.getInstance();
-        CollectionReference adminDB = db.collection("Admin");
+        adminDatabase = FirebaseFirestore.getInstance();
+        CollectionReference adminDB = adminDatabase.collection("Admin");
 
         Map<String, Object> data1 = new HashMap<>();
         data1.put("email", CurrentUser.getInstance().getEmail());
@@ -107,7 +105,7 @@ public class AdminHomeFragment extends Fragment {
         adminID = view.findViewById(R.id.ah_profile_id);
         adminUN = view.findViewById(R.id.ah_profile_username);
 
-        DocumentReference docRef = db.collection("Admin").document("Admin");
+        DocumentReference docRef = adminDatabase.collection("Admin").document("Admin");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -127,7 +125,6 @@ public class AdminHomeFragment extends Fragment {
             }
         });
 
-
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,8 +137,6 @@ public class AdminHomeFragment extends Fragment {
         });
         return view;
     }
-
-
 
     private void signOut() {
         mGoogleSignInClient.signOut()
