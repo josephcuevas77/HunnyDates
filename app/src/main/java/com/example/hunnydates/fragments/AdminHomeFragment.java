@@ -1,6 +1,7 @@
 package com.example.hunnydates.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,10 +39,16 @@ import com.squareup.picasso.Picasso;
  */
 public class AdminHomeFragment extends Fragment {
 
+    private static final String TAG = "";
     private ImageView profileImage;
     private TextView profileName;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseFirestore db;
+    private TextView adminEmail;
+    private TextView adminID;
+    private TextView adminUN;
+
 
     public AdminHomeFragment() {
         // Required empty public constructor
@@ -78,6 +94,40 @@ public class AdminHomeFragment extends Fragment {
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSIO);
 
+        db = FirebaseFirestore.getInstance();
+        CollectionReference adminDB = db.collection("Admin");
+
+        Map<String, Object> data1 = new HashMap<>();
+        data1.put("email", CurrentUser.getInstance().getEmail());
+        data1.put("id", "999999");
+        data1.put("userName", "Hunny123");
+        adminDB.document("Admin").set(data1, SetOptions.merge());
+
+        adminEmail = view.findViewById(R.id.ah_profile_email);
+        adminID = view.findViewById(R.id.ah_profile_id);
+        adminUN = view.findViewById(R.id.ah_profile_username);
+
+        DocumentReference docRef = db.collection("Admin").document("Admin");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "Document data: " + document.getData());
+                        adminEmail.setText("Email:" + document.getString("email"));
+                        adminID.setText("ID:" + document.getString("id"));
+                        adminUN.setText("User Name" + document.getString("userName"));
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +140,8 @@ public class AdminHomeFragment extends Fragment {
         });
         return view;
     }
+
+
 
     private void signOut() {
         mGoogleSignInClient.signOut()

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="default_web_client_id" translatable="false">514774398421-esgf8lvun4a7gkmi9f230ft1ukvls3th.apps.googleusercontent.com</string>
-    <string name="firebase_database_url" translatable="false">https://hunnydates-b62c4-default-rtdb.firebaseio.com</string>
-    <string name="gcm_defaultSenderId" translatable="false">514774398421</string>
-    <string name="google_api_key" translatable="false">AIzaSyAG2wC0H3cQXANhQJhD0YEYGeeUTn5N2DU</string>
-    <string name="google_app_id" translatable="false">1:514774398421:android:ce9d8608ba945b8592395c</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAG2wC0H3cQXANhQJhD0YEYGeeUTn5N2DU</string>
-    <string name="google_storage_bucket" translatable="false">hunnydates-b62c4.appspot.com</string>
-    <string name="project_id" translatable="false">hunnydates-b62c4</string>
+<!--    <string name="default_web_client_id" translatable="false">514774398421-esgf8lvun4a7gkmi9f230ft1ukvls3th.apps.googleusercontent.com</string>-->
+<!--    <string name="firebase_database_url" translatable="false">https://hunnydates-b62c4-default-rtdb.firebaseio.com</string>-->
+<!--    <string name="gcm_defaultSenderId" translatable="false">514774398421</string>-->
+<!--    <string name="google_api_key" translatable="false">AIzaSyAG2wC0H3cQXANhQJhD0YEYGeeUTn5N2DU</string>-->
+<!--    <string name="google_app_id" translatable="false">1:514774398421:android:ce9d8608ba945b8592395c</string>-->
+<!--    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAG2wC0H3cQXANhQJhD0YEYGeeUTn5N2DU</string>-->
+<!--    <string name="google_storage_bucket" translatable="false">hunnydates-b62c4.appspot.com</string>-->
 </resources>
