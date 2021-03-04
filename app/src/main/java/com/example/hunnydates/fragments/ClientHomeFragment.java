@@ -50,7 +50,7 @@ public class ClientHomeFragment extends Fragment {
     private Button editProfileButton;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseFirestore adminDatabase;
+    private FirebaseFirestore database;
 
     public ClientHomeFragment() {
         // Required empty public constructor

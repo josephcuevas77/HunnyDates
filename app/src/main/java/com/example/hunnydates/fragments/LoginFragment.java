@@ -28,6 +28,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +48,7 @@ public class LoginFragment extends Fragment {
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore database;
     private int RC_SIGN_IN = 1;
 
     public LoginFragment() {
@@ -79,6 +90,7 @@ public class LoginFragment extends Fragment {
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSIO);
 
+        database = FirebaseFirestore.getInstance();
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,13 +171,51 @@ public class LoginFragment extends Fragment {
             CurrentUser.getInstance().setAccountID(account.getId());
             CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
 
-            switch (account.getEmail()) {
-                case "hunnydates.official@gmail.com":
-                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_adminActivity);
-                    break;
-                default:
-                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
-            }
+            String documentID = CurrentUser.getInstance().getEmail().toLowerCase();
+            databaseOperations();
+//            switch (account.getEmail()) {
+//                case "hunnydates.official@gmail.com":
+//                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_adminActivity);
+//                    break;
+//                default:
+//                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
+//            }
         }
+    }
+
+    private void databaseOperations() {
+        String documentID = CurrentUser.getInstance().getEmail().toLowerCase();
+        DocumentReference documentReferenceAdmin = database.collection("admins").document(documentID);
+        documentReferenceAdmin.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_adminActivity);
+                    } else {
+                        DocumentReference documentReferenceClient = database.collection("clients").document(documentID);
+                        documentReferenceClient.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
+                                    } else {
+                                        Map<String, Object> clientData = new HashMap<>();
+                                        clientData.put("email", CurrentUser.getInstance().getEmail());
+                                        clientData.put("username", CurrentUser.getInstance().getDisplayName());
+                                        database.collection("clients").document(documentID).set(clientData);
+                                    }
+                                } else {
+                                }
+                            }
+                        });
+                    }
+                } else {
+                }
+            }
+        });
     }
 }
