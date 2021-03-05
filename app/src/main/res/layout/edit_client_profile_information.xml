@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Editable
+-Username
+-Bio
+-Preferences (Dropdown Menu)
+-Likes (List of Tags)
+-Dislikes (List of Tags)
+-First Name/Last Name
+-->
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
