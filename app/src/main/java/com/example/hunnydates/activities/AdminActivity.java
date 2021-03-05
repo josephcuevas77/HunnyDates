@@ -1,13 +1,11 @@
 package com.example.hunnydates.activities;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.hunnydates.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,28 +21,9 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.admin_display);
 
         bottomNavigationView = findViewById(R.id.ad_bottom_navigation_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.admin_nav_host_fragment);
         navController = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(bottomNavigationView,navController);
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            // By using switch we can easily get
-            // the selected fragment
-            // by using there id.
-            Fragment selectedFragment = null;
-            switch (item.getItemId()) {
-                case R.id.ab_nav_home:
-//                    navController.navigate(R.id.clientHomeFragment);
-                    break;
-                case R.id.ab_nav_list:
-//                    navController.navigate(R.id.matchesFragment);
-                    break;
-            }
-            return true;
-        }
-    };
 }

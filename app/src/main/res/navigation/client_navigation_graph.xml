@@ -3,30 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/client_navigation"
-    app:startDestination="@id/clientHomeFragment">
+    app:startDestination="@id/cb_nav_home">
     <fragment
-        android:id="@+id/clientHomeFragment"
+        android:id="@+id/cb_nav_home"
         android:name="com.example.hunnydates.fragments.ClientHomeFragment"
         android:label="ClientHomeFragment"
         tools:layout="@layout/client_home" />
     <fragment
-        android:id="@+id/matchesFragment"
+        android:id="@+id/cb_nav_matches"
         android:name="com.example.hunnydates.fragments.MatchesFragment"
         android:label="MatchesFragment"
         tools:layout="@layout/view_matches" />
     <fragment
-        android:id="@+id/createDateFragment"
-        android:name="com.example.hunnydates.fragments.CreateDateFragment"
+        android:id="@+id/cb_nav_search"
+        android:name="com.example.hunnydates.fragments.SearchFragment"
         android:label="CreateDateFragment"
         tools:layout="@layout/create_date_plan" />
     <fragment
-        android:id="@+id/viewDatesFragment"
-        android:name="com.example.hunnydates.fragments.ViewDatesFragment"
+        android:id="@+id/cb_nav_create"
+        android:name="com.example.hunnydates.fragments.CreateDateFragment"
         android:label="ViewDatesFragment"
         tools:layout="@layout/view_date_plans" />
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.hunnydates.fragments.SearchFragment"
+        android:id="@+id/cb_nav_list"
+        android:name="com.example.hunnydates.fragments.ViewDatesFragment"
         android:label="SearchFragment"
         tools:layout="@layout/search_user_profile" />
 </navigation>

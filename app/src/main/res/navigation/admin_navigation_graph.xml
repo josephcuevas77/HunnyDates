@@ -3,10 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/admin_navigation_graph"
-    app:startDestination="@id/adminHomeFragment">
+    app:startDestination="@id/ab_nav_home">
     <fragment
-        android:id="@+id/adminHomeFragment"
+        android:id="@+id/ab_nav_home"
         android:name="com.example.hunnydates.fragments.AdminHomeFragment"
         android:label="AdminHomeFragment"
         tools:layout="@layout/admin_home" />
+    <fragment
+        android:id="@+id/ab_nav_list"
+        android:name="com.example.hunnydates.fragments.ViewUserReportsFragment"
+        android:label="ViewUserReportsFragment"
+        tools:layout="@layout/view_user_reports" />
 </navigation>

@@ -94,11 +94,13 @@ public class LoginFragment extends Fragment {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                signInButton.setEnabled(false);
                 signIn();
             }
         });
 
         if(GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext()) != null) {
+            signInButton.setEnabled(false);
             signIn();
         }
         return view;
@@ -148,20 +150,11 @@ public class LoginFragment extends Fragment {
         }
         else{
             Toast.makeText(getActivity(), "Failed to access account.", Toast.LENGTH_LONG).show();
+            signInButton.setEnabled(true);
         }
     }
 
     private void loginToHunnyDates(FirebaseUser fUser){
-//        Set to true to skip the login process.
-//        Otherwise, set to false.
-        boolean debugging = false;
-
-        if(debugging) {
-//            Navigation.findNavController(getView()).navigate(R.id.clientHomeScreen);
-            NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
-            return;
-        }
-
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
         if(fUser != null){
             CurrentUser.getInstance().setDisplayName(account.getDisplayName());
@@ -171,15 +164,7 @@ public class LoginFragment extends Fragment {
             CurrentUser.getInstance().setAccountID(account.getId());
             CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
 
-            String documentID = CurrentUser.getInstance().getEmail().toLowerCase();
             databaseOperations();
-//            switch (account.getEmail()) {
-//                case "hunnydates.official@gmail.com":
-//                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_adminActivity);
-//                    break;
-//                default:
-//                    NavHostFragment.findNavController(this).navigate(R.id.action_loginScreen_to_clientActivity);
-//            }
         }
     }
 
@@ -193,6 +178,7 @@ public class LoginFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_adminActivity);
+                        signInButton.setEnabled(true);
                     } else {
                         DocumentReference documentReferenceClient = database.collection("clients").document(documentID);
                         documentReferenceClient.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -202,11 +188,14 @@ public class LoginFragment extends Fragment {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
+                                        signInButton.setEnabled(true);
                                     } else {
                                         Map<String, Object> clientData = new HashMap<>();
                                         clientData.put("email", CurrentUser.getInstance().getEmail());
                                         clientData.put("username", CurrentUser.getInstance().getDisplayName());
                                         database.collection("clients").document(documentID).set(clientData);
+                                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
+                                        signInButton.setEnabled(true);
                                     }
                                 } else {
                                 }
@@ -214,6 +203,7 @@ public class LoginFragment extends Fragment {
                         });
                     }
                 } else {
+                    signInButton.setEnabled(true);
                 }
             }
         });

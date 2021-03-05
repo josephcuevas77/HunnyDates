@@ -2,13 +2,8 @@ package com.example.hunnydates.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,21 +17,9 @@ import com.example.hunnydates.utils.CurrentUser;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,7 +67,7 @@ public class ClientHomeFragment extends Fragment {
 
         initializeComponents(view);
         initializeGoogleSignIn();
-        displayProfileImage();
+        displayCurrentUserInfo();
 
         editProfileButton.setOnClickListener(editProfileButtonListener);
         logoutButton.setOnClickListener(logoutButtonListener);
@@ -110,7 +93,8 @@ public class ClientHomeFragment extends Fragment {
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSIO);
     }
 
-    private void displayProfileImage() {
+    private void displayCurrentUserInfo() {
+        // Picasso is a library for importing images with a PhotoURL
         Picasso.get().load(CurrentUser.getInstance().getPhotoURL()).into(profileImage);
         profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
     }
