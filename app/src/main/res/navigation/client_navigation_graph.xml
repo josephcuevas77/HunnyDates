@@ -26,7 +26,12 @@
         tools:layout="@layout/view_date_plans" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.hunnydates.fragments.ExampleFragment"
+        android:name="com.example.hunnydates.fragments.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/search_user_profile" />
+    <fragment
+        android:id="@+id/editClientFragment"
+        android:name="com.example.hunnydates.fragments.EditClientFragment"
+        android:label="EditClientFragment"
+        tools:layout="@layout/edit_client_profile_information" />
 </navigation>

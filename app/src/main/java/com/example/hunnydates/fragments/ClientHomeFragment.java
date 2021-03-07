@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -39,6 +40,7 @@ public class ClientHomeFragment extends Fragment {
     private Button editProfileButton;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
+    private NavController navController;
 
     public ClientHomeFragment() {
         // Required empty public constructor
@@ -69,6 +71,9 @@ public class ClientHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.client_home, container, false);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.admin_nav_host_fragment);
+        navController = navHostFragment.getNavController();
 
         profileImage = view.findViewById(R.id.ch_profile_icon);
         profileName = view.findViewById(R.id.ch_profile_name);
@@ -88,7 +93,8 @@ public class ClientHomeFragment extends Fragment {
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Editing Profile Info", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), "Editing Profile Info", Toast.LENGTH_LONG).show();
+                navController.navigate(R.id.editClientFragment);
             }
         });
 
