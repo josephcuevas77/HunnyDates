@@ -3,6 +3,8 @@ package com.example.hunnydates.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +83,7 @@ public class ClientHomeFragment extends Fragment {
 
     private void initializeComponents(View view) {
         NavHostFragment navHostFragment =
-                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.admin_nav_host_fragment);
+                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.client_nav_host_fragment);
         navController = navHostFragment.getNavController();
         profileImage = view.findViewById(R.id.ch_profile_icon);
         profileName = view.findViewById(R.id.ch_profile_name);

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Editable
+-Username
+-Bio
+-Preferences (Dropdown Menu)
+-Likes (List of Tags)
+-Dislikes (List of Tags)
+-First Name/Last Name
+-->
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,40 +42,41 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            android:id="@+id/ec_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ec_username_text_field" />
+
+        <EditText
+            android:id="@+id/ec_name_text_field"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@id/ec_name_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/ec_age_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Age"
-            app:layout_constraintTop_toBottomOf="@id/ec_username_text_field"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ec_name_text_field" />
 
         <EditText
             android:id="@+id/ec_age_text_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number"
-            app:layout_constraintTop_toBottomOf="@id/ec_age_text_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/ec_password_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            app:layout_constraintTop_toBottomOf="@id/ec_age_text_field"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/ec_password_text_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPassword"
-            app:layout_constraintTop_toBottomOf="@id/ec_password_text_view"
+            app:layout_constraintTop_toBottomOf="@id/ec_age_text_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -73,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
-            app:layout_constraintTop_toBottomOf="@id/ec_password_text_field"
+            app:layout_constraintTop_toBottomOf="@id/ec_age_text_field"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
