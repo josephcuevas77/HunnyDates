@@ -5,22 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.hunnydates.R;
+import com.example.hunnydates.utils.CurrentUser;
 
-public class CreateDateFragment extends Fragment {
+public class EditClientFragment extends Fragment {
 
-    private EditText dateTitle;
-    private EditText dateDesc;
-    //private Button createDate;
+    private EditText profileName;
 
-    public CreateDateFragment() {
+    public EditClientFragment() {
     }
 
-    public static CreateDateFragment newInstance(String param1, String param2) {
-        CreateDateFragment fragment = new CreateDateFragment();
+    public static EditClientFragment newInstance(String param1, String param2) {
+        EditClientFragment fragment = new EditClientFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -36,7 +36,10 @@ public class CreateDateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.create_date_plan, container, false);
+        View view = inflater.inflate(R.layout.edit_client_profile_information, container, false);
+        profileName = view.findViewById(R.id.ec_name_text_field);
+        profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
+
         return view;
     }
 }

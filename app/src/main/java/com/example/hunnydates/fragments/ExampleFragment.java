@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hunnydates.R;
 
-public class SearchFragment extends Fragment {
+public class ExampleFragment extends Fragment {
 
-    public SearchFragment() {
+    public ExampleFragment() {
     }
 
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
+    public static EditClientFragment newInstance(String param1, String param2) {
+        EditClientFragment fragment = new EditClientFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

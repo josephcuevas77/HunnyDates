@@ -34,6 +34,7 @@ public class ClientHomeFragment extends Fragment {
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseFirestore database;
+    private NavController navController;
 
     public ClientHomeFragment() {
         // Required empty public constructor
@@ -65,6 +66,7 @@ public class ClientHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.client_home, container, false);
 
+
         initializeComponents(view);
         initializeGoogleSignIn();
         displayCurrentUserInfo();
@@ -78,6 +80,9 @@ public class ClientHomeFragment extends Fragment {
     }
 
     private void initializeComponents(View view) {
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.admin_nav_host_fragment);
+        navController = navHostFragment.getNavController();
         profileImage = view.findViewById(R.id.ch_profile_icon);
         profileName = view.findViewById(R.id.ch_profile_name);
         editProfileButton = view.findViewById(R.id.ch_edit_profile_button);
@@ -102,7 +107,8 @@ public class ClientHomeFragment extends Fragment {
     private View.OnClickListener editProfileButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(getActivity(), "Editing Profile Info", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "Editing Profile Info", Toast.LENGTH_LONG).show();
+            navController.navigate(R.id.editClientFragment);
         }
     };
 
