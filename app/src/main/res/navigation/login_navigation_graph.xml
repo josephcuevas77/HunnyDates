@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/loginScreen">
+
+    <fragment
+        android:id="@+id/loginScreen"
+        tools:layout="@layout/hunny_dates_login"
+        android:name="com.example.hunnydates.fragments.LoginFragment"
+        android:label="LoginScreen" >
+        <action
+            android:id="@+id/action_loginScreen_to_clientActivity"
+            app:destination="@id/clientActivity" />
+        <action
+            android:id="@+id/action_loginScreen_to_adminActivity"
+            app:destination="@id/adminActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/clientActivity"
+        android:name="com.example.hunnydates.activities.ClientActivity"
+        android:label="ClientActivity"
+        tools:layout="@layout/client_display" />
+    <activity
+        android:id="@+id/adminActivity"
+        android:name="com.example.hunnydates.activities.AdminActivity"
+        android:label="AdminActivity"
+        tools:layout="@layout/admin_display" />
+
+</navigation>
