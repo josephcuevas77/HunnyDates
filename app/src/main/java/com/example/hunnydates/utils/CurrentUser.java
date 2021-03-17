@@ -1,6 +1,7 @@
 package com.example.hunnydates.utils;
 
 import android.net.Uri;
+import com.google.firebase.firestore.DocumentReference;
 
 /**
  * Current User: Singleton Class
@@ -16,6 +17,7 @@ public final class CurrentUser {
     private String email = null;
     private String accountID = null;
     private Uri photoURL = null;
+    private DocumentReference document = null;
 
     private CurrentUser() {}
 
@@ -69,6 +71,24 @@ public final class CurrentUser {
 
     public void setPhotoURL(Uri photoURL) {
         this.photoURL = photoURL;
+    }
+
+    public void setDocument(DocumentReference document) {
+        this.document = document;
+    }
+
+    public DocumentReference getDocument() {
+        return document;
+    }
+
+    public void clearCurrentUserInfo() {
+        displayName = null;
+        givenName = null;
+        familyName = null;
+        email = null;
+        accountID = null;
+        photoURL = null;
+        document = null;
     }
 
 }

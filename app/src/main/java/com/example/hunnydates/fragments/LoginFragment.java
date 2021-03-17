@@ -178,6 +178,7 @@ public class LoginFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_adminActivity);
+                        CurrentUser.getInstance().setDocument(database.collection("admins").document(documentID));
                         signInButton.setEnabled(true);
                     } else {
                         DocumentReference documentReferenceClient = database.collection("clients").document(documentID);
@@ -188,6 +189,7 @@ public class LoginFragment extends Fragment {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
+                                        CurrentUser.getInstance().setDocument(database.collection("clients").document(documentID));
                                         signInButton.setEnabled(true);
                                     } else {
                                         Map<String, Object> clientData = new HashMap<>();
@@ -195,6 +197,7 @@ public class LoginFragment extends Fragment {
                                         clientData.put("username", CurrentUser.getInstance().getDisplayName());
                                         database.collection("clients").document(documentID).set(clientData);
                                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
+                                        CurrentUser.getInstance().setDocument(database.collection("clients").document(documentID));
                                         signInButton.setEnabled(true);
                                     }
                                 } else {

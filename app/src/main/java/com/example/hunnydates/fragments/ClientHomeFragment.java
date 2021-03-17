@@ -111,8 +111,8 @@ public class ClientHomeFragment extends Fragment {
         public void onClick(View view) {
             FirebaseAuth.getInstance().signOut();
 //                mGoogleSignInClient.revokeAccess();
+            CurrentUser.getInstance().clearCurrentUserInfo();
             mGoogleSignInClient.signOut();
-
             getActivity().finish();
         }
     };
