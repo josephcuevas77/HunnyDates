@@ -14,8 +14,8 @@ public class SearchFragment extends Fragment {
     public SearchFragment() {
     }
 
-    public static ExampleFragment newInstance(String param1, String param2) {
-        ExampleFragment fragment = new ExampleFragment();
+    public static SearchFragment newInstance(String param1, String param2) {
+        SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
