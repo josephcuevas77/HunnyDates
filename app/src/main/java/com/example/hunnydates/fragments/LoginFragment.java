@@ -195,6 +195,7 @@ public class LoginFragment extends Fragment {
                                         Map<String, Object> clientData = new HashMap<>();
                                         clientData.put("email", CurrentUser.getInstance().getEmail());
                                         clientData.put("username", CurrentUser.getInstance().getDisplayName());
+                                        clientData.put("display-name", CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
                                         database.collection("clients").document(documentID).set(clientData);
                                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
                                         CurrentUser.getInstance().setDocument(database.collection("clients").document(documentID));

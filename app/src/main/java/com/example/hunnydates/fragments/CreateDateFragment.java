@@ -75,19 +75,9 @@ public class CreateDateFragment extends Fragment {
 
         dateData.put("title", dateTitle.getText().toString());
         dateData.put("description", dateDesc.getText().toString());
-//                    document.collection("date-plans").add(dateData);
-        database.collection("clients")
-                .document(CurrentUser.getInstance().getEmail())
+
+        CurrentUser.getInstance().getDocument()
                 .collection("date-plans")
                 .add(dateData);
-//        document.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//
-////                    Toast.makeText(getActivity(), "Hello", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
     }
 }

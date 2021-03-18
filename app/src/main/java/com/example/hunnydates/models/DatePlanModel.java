@@ -1,5 +1,15 @@
 package com.example.hunnydates.models;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.example.hunnydates.utils.CurrentUser;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import static android.content.ContentValues.TAG;
+
 public class DatePlanModel {
 
     private String title;
