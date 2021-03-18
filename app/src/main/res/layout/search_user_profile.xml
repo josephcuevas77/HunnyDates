@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,11 +9,67 @@
         android:id="@+id/sup_place_holder_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Search User Profile"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sup_receipient_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recipient:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/sup_recipient_et"
+        app:layout_constraintStart_toStartOf="@+id/sup_place_holder_text"
+        app:layout_constraintTop_toTopOf="@+id/sup_recipient_et" />
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Message"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="@+id/sup_recipient_et"
+        app:layout_constraintStart_toStartOf="@+id/sup_receipient_tv"
+        app:layout_constraintTop_toBottomOf="@+id/sup_recipient_et" />
+
+    <EditText
+        android:id="@+id/sup_recipient_et"
+        android:layout_width="204dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Recipient"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="@+id/sup_place_holder_text"
+        app:layout_constraintStart_toEndOf="@+id/sup_receipient_tv"
+        app:layout_constraintTop_toBottomOf="@+id/sup_place_holder_text" />
+
+    <Button
+        android:id="@+id/sup_send_msg_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Send Message"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+
+    <Button
+        android:id="@+id/sup_show_msg_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Show Messages"
+        app:layout_constraintEnd_toEndOf="@+id/sup_send_msg_btn"
+        app:layout_constraintStart_toStartOf="@+id/sup_send_msg_btn"
+        app:layout_constraintTop_toBottomOf="@+id/sup_send_msg_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,6 +31,12 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.search_user_profile, container, false);
+        View view = inflater.inflate(R.layout.search_user_profile, container, false);
+        initializeComponents(view);
+
+        return view;
+    }
+
+    private void initializeComponents(View view) {
     }
 }

@@ -28,7 +28,6 @@ public class CreateDateFragment extends Fragment {
     private EditText dateTitle;
     private EditText dateDesc;
     private Button createDate;
-    private FirebaseFirestore database;
 
     public CreateDateFragment() {
     }
@@ -70,7 +69,6 @@ public class CreateDateFragment extends Fragment {
     }
 
     private void postDateToFirestore() {
-        database = FirebaseFirestore.getInstance();
         Map<String, Object> dateData = new HashMap<>();
 
         dateData.put("title", dateTitle.getText().toString());
@@ -79,5 +77,7 @@ public class CreateDateFragment extends Fragment {
         CurrentUser.getInstance().getDocument()
                 .collection("date-plans")
                 .add(dateData);
+
+        Toast.makeText(getActivity(), "Date Plan Added", Toast.LENGTH_SHORT).show();
     }
 }
