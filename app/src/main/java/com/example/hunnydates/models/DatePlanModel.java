@@ -37,4 +37,5 @@ public class DatePlanModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
