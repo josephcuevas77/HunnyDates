@@ -42,10 +42,6 @@ public class AdminHomeFragment extends Fragment {
     private TextView profileName;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseFirestore database;
-    private TextView adminEmail;
-    private TextView adminID;
-    private TextView adminUN;
 
 
     public AdminHomeFragment() {
@@ -105,14 +101,4 @@ public class AdminHomeFragment extends Fragment {
         });
         return view;
     }
-
-//    private void signOut() {
-//        mGoogleSignInClient.signOut()
-//                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // ...
-//                    }
-//                });
-//    }
 }
