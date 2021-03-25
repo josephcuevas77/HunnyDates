@@ -1,2 +1,0 @@
-Only for project structure.
-Delete after a interface has been added.

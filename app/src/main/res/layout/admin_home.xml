@@ -1,29 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/ah_profile_username"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            android:text="user name"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ah_profile_id"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <androidx.cardview.widget.CardView
+    <androidx.cardview.widget.CardView
             android:id="@+id/ah_profile_card_view"
             android:layout_width="300dp"
             android:layout_height="300dp"
@@ -73,46 +55,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ah_logout_button" />
-
-        <TextView
-            android:id="@+id/ah_profile_email"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="8dp"
-            android:text="email"
-            android:textColor="#03A9F4"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ah_placeholder_text"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/ah_profile_id"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            android:text="user id"
-            android:textColor="#3F51B5"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ah_profile_email"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
-        <!--            android:id="@+id/ah_bottomNavigationView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            style="@style/BottomNavBar"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:menu="@menu/admin_bottom_navigation" />-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
