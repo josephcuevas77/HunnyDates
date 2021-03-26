@@ -9,9 +9,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hunnydates.R;
 import com.example.hunnydates.utils.CurrentUser;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -22,7 +25,8 @@ public class SearchFragment extends Fragment {
     private EditText recipientEditText;
     private EditText messageEditText;
     private Button sendMessageButton;
-    private Button showMessagesButton;
+    private Button tempNavigateButton;
+    private NavController navController;
 
     public SearchFragment() {
     }
@@ -54,10 +58,12 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        showMessagesButton.setOnClickListener(new View.OnClickListener() {
+        tempNavigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Show messages", Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("recipient", recipientEditText.getText().toString());
+                navController.navigate(R.id.messageFragment, bundle);
             }
         });
 
@@ -68,26 +74,32 @@ public class SearchFragment extends Fragment {
         recipientEditText = view.findViewById(R.id.sup_recipient_et);
         messageEditText = view.findViewById(R.id.sup_message_et);
         sendMessageButton = view.findViewById(R.id.sup_send_msg_btn);
-        showMessagesButton = view.findViewById(R.id.sup_show_msg_btn);
+        tempNavigateButton = view.findViewById(R.id.sup_tmp_btn);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.client_nav_host_fragment);
+        navController = navHostFragment.getNavController();
     }
 
     private void postMessageToFirestore() {
         Map<String, Object> messageData = new HashMap<>();
 
-        messageData.put("recipient", recipientEditText.getText().toString());
-        messageData.put("message", messageEditText.getText().toString());
+        String receiver = recipientEditText.getText().toString();
+        String sender = CurrentUser.getInstance().getEmail();
+        String message = messageEditText.getText().toString();
+
+        messageData.put("recipient", receiver);
+        messageData.put("sender", sender);
+        messageData.put("message", message);
+        messageData.put("time-stamp", Timestamp.now());
 
         CurrentUser.getInstance().getDocument()
-                .collection("outgoing-messages")
+                .collection("messages")
                 .add(messageData);
-
-        messageData.remove("recipient");
-        messageData.put("sender", CurrentUser.getInstance().getEmail());
 
         FirebaseFirestore.getInstance()
                 .collection("clients")
-                .document(recipientEditText.getText().toString())
-                .collection("incoming-messages")
+                .document(receiver)
+                .collection("messages")
                 .add(messageData);
 
         Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_SHORT).show();

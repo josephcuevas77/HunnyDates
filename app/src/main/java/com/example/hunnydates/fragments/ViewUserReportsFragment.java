@@ -14,8 +14,8 @@ public class ViewUserReportsFragment extends Fragment {
     public ViewUserReportsFragment() {
     }
 
-    public static ViewUserReportsFragment newInstance(String param1, String param2) {
-        ViewUserReportsFragment fragment = new ViewUserReportsFragment();
+    public static MessageFragment newInstance(String param1, String param2) {
+        MessageFragment fragment = new MessageFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

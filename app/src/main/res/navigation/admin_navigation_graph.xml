@@ -11,7 +11,7 @@
         tools:layout="@layout/admin_home" />
     <fragment
         android:id="@+id/ab_nav_list"
-        android:name="com.example.hunnydates.fragments.ViewUserReportsFragment"
+        android:name="com.example.hunnydates.fragments.MessageFragment"
         android:label="ViewUserReportsFragment"
         tools:layout="@layout/view_user_reports" />
 </navigation>
