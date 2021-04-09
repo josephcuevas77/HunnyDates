@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hunnydates.R;
+import com.example.hunnydates.models.MessageModel;
 import com.example.hunnydates.models.MessagePreviewModel;
 import com.example.hunnydates.utils.CurrentUser;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
 public class SearchFragment extends Fragment {
 
@@ -54,6 +58,7 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_user_profile, container, false);
         initializeComponents(view);
+        recyclerViewCode();
 
         return view;
     }
@@ -66,6 +71,17 @@ public class SearchFragment extends Fragment {
                 (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.client_nav_host_fragment);
         navController = navHostFragment.getNavController();
 
+        navigateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("recipient", recipientEditText.getText().toString());
+                navController.navigate(R.id.messageFragment, bundle);
+            }
+        });
+    }
+
+    private void recyclerViewCode() {
         // Query
         Query query = CurrentUser.getInstance().getDocument()
                 .collection("messages");
@@ -86,12 +102,15 @@ public class SearchFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull SearchFragment.MessagePreviewViewHolder holder, int position, @NonNull MessagePreviewModel model) {
                 DocumentSnapshot snapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
+                // Picasso is a library for importing images with a PhotoURL
+                Picasso.get().load(snapshot.getString("photo-url")).into(holder.clientImageView);
                 holder.clientTextView.setText(snapshot.getString("display-name"));
                 holder.clientTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("recipient", snapshot.getString("display-name"));
+                        bundle.putString("recipient", snapshot.getString("email"));
+                        bundle.putString("photo-url", snapshot.getString("photo-url"));
                         navController.navigate(R.id.messageFragment, bundle);
                     }
                 });
@@ -101,23 +120,16 @@ public class SearchFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
-        navigateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("recipient", recipientEditText.getText().toString());
-                navController.navigate(R.id.messageFragment, bundle);
-            }
-        });
     }
 
     private class MessagePreviewViewHolder extends RecyclerView.ViewHolder {
 
+        private ImageView clientImageView;
         private TextView clientTextView;
 
         public MessagePreviewViewHolder(@NonNull View itemView) {
             super(itemView);
+            clientImageView = itemView.findViewById(R.id.mpi_profile_iv);
             clientTextView = itemView.findViewById(R.id.mpi_client_tv);
         }
     }

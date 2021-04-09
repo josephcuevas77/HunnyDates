@@ -67,7 +67,6 @@ public class ClientHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.client_home, container, false);
 
-
         initializeComponents(view);
         initializeGoogleSignIn();
         displayCurrentUserInfo();
@@ -101,10 +100,11 @@ public class ClientHomeFragment extends Fragment {
 
     private void displayCurrentUserInfo() {
         // Picasso is a library for importing images with a PhotoURL
-        Picasso.get().load(CurrentUser.getInstance().getPhotoURL()).into(profileImage);
-        profileName.setText(CurrentUser.getInstance().getGivenName());
+        Picasso.get().load(CurrentUser.getInstance().getPhotoURL().toString()).into(profileImage);
         if(CurrentUser.getInstance().getFamilyName() != null)
             profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
+        else
+            profileName.setText(CurrentUser.getInstance().getGivenName());
     }
 
     private View.OnClickListener editProfileButtonListener = new View.OnClickListener() {

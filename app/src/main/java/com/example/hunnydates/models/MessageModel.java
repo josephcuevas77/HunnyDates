@@ -6,16 +6,12 @@ import com.google.firebase.Timestamp;
 public class MessageModel {
 
     private String message;
-    private String recipient;
-    private String sender;
     private Timestamp timestamp;
 
     private MessageModel() {}
 
-    private MessageModel(String message, String recipient, String sender, Timestamp timestamp) {
+    private MessageModel(String message, Timestamp timestamp) {
         this.message = message;
-        this.recipient = recipient;
-        this.sender = sender;
         this.timestamp = timestamp;
     }
 
@@ -27,22 +23,6 @@ public class MessageModel {
         this.message = message;
     }
 
-    public String getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -50,4 +30,5 @@ public class MessageModel {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+
 }
