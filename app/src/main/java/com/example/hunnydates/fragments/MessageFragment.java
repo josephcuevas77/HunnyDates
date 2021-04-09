@@ -110,8 +110,6 @@ public class MessageFragment extends Fragment {
 
                 DocumentSnapshot.ServerTimestampBehavior behavior = DocumentSnapshot.ServerTimestampBehavior.ESTIMATE;
                 Timestamp timestamp = snapshot.getTimestamp("time-stamp", behavior);
-                holder.sender.setText(model.getSender());
-                holder.receiver.setText(model.getRecipient());
                 holder.message.setText(model.getMessage());
                 holder.timestamp.setText(timestamp.toDate().toString());
             }
@@ -180,15 +178,11 @@ public class MessageFragment extends Fragment {
 
     private class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView sender;
-        private TextView receiver;
         private TextView message;
         private TextView timestamp;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
-            sender = itemView.findViewById(R.id.msg_sender_tv);
-            receiver = itemView.findViewById(R.id.msg_receiver_tv);
             message = itemView.findViewById(R.id.msg_message_tv);
             timestamp = itemView.findViewById(R.id.msg_timestamp_tv);
         }
