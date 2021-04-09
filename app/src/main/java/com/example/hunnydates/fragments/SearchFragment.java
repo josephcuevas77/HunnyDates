@@ -14,7 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hunnydates.R;
 import com.example.hunnydates.utils.CurrentUser;
-import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -82,6 +83,8 @@ public class SearchFragment extends Fragment {
 
     private void postMessageToFirestore() {
         Map<String, Object> messageData = new HashMap<>();
+        Map<String, Object> receiverData = new HashMap<>();
+        Map<String, Object> senderData = new HashMap<>();
 
         String receiver = recipientEditText.getText().toString();
         String sender = CurrentUser.getInstance().getEmail();
@@ -90,9 +93,29 @@ public class SearchFragment extends Fragment {
         messageData.put("recipient", receiver);
         messageData.put("sender", sender);
         messageData.put("message", message);
-        messageData.put("time-stamp", Timestamp.now());
+        messageData.put("time-stamp", FieldValue.serverTimestamp());
 
-        CurrentUser.getInstance().getDocument()
+        receiverData.put("display-name", receiver);
+        senderData.put("display-name", sender);
+
+        CurrentUser.getInstance()
+                .getDocument()
+                .collection("messages")
+                .document(receiver)
+                .collection("messages")
+                .add(messageData);
+
+        CurrentUser.getInstance()
+                .getDocument()
+                .collection("messages")
+                .document(receiver)
+                .set(receiverData);
+
+        FirebaseFirestore.getInstance()
+                .collection("clients")
+                .document(receiver)
+                .collection("messages")
+                .document(sender)
                 .collection("messages")
                 .add(messageData);
 
@@ -100,7 +123,8 @@ public class SearchFragment extends Fragment {
                 .collection("clients")
                 .document(receiver)
                 .collection("messages")
-                .add(messageData);
+                .document(sender)
+                .set(senderData);
 
         Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_SHORT).show();
     }

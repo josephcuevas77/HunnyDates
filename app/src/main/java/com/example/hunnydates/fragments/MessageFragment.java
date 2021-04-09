@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,16 +17,22 @@ import com.example.hunnydates.models.MessageModel;
 import com.example.hunnydates.utils.CurrentUser;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.SnapshotParser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Arrays;
 
 
 public class MessageFragment extends Fragment {
 
     private TextView header;
     private RecyclerView recyclerView;
-    private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
     private String recipient;
 
@@ -58,14 +65,13 @@ public class MessageFragment extends Fragment {
     private void initializeComponents(View view) {
         header = view.findViewById(R.id.cmd_header_tv);
         header.setText(recipient);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.cmd_recycler_view);
 
         // Query
         Query query = CurrentUser.getInstance().getDocument()
                 .collection("messages")
-//                .whereEqualTo("receiver", recipient)
+                .document(recipient)
+                .collection("messages")
                 .orderBy("time-stamp");
 
         // RecyclerOptions
@@ -77,17 +83,33 @@ public class MessageFragment extends Fragment {
             @NonNull
             @Override
             public MessageFragment.MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item, parent, false);
+                View view;
+                if(viewType == 1)
+                    view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.sender_message_item, parent, false);
+                else
+                    view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiver_message_item, parent, false);
                 return new MessageFragment.MessageViewHolder(view);
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                DocumentSnapshot snapshot = getSnapshots().getSnapshot(position);
+                if(snapshot.get("sender").equals(CurrentUser.getInstance().getEmail()))
+                    return 1;
+                else
+                    return 0;
             }
 
             @Override
             protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull MessageModel model) {
                 DocumentSnapshot snapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
+
+                DocumentSnapshot.ServerTimestampBehavior behavior = DocumentSnapshot.ServerTimestampBehavior.ESTIMATE;
+                Timestamp timestamp = snapshot.getTimestamp("time-stamp", behavior);
                 holder.sender.setText(model.getSender());
-                holder.receiver.setText(model.getReceipient());
+                holder.receiver.setText(model.getRecipient());
                 holder.message.setText(model.getMessage());
-//                holder.timestamp.setText(model.getTimestamp().toString());
+                holder.timestamp.setText(timestamp.toDate().toString());
             }
         };
 

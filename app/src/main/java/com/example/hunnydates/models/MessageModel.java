@@ -1,11 +1,12 @@
 package com.example.hunnydates.models;
 
-import java.sql.Timestamp;
+
+import com.google.firebase.Timestamp;
 
 public class MessageModel {
 
     private String message;
-    private String receipient;
+    private String recipient;
     private String sender;
     private Timestamp timestamp;
 
@@ -13,7 +14,7 @@ public class MessageModel {
 
     private MessageModel(String message, String recipient, String sender, Timestamp timestamp) {
         this.message = message;
-        this.receipient = recipient;
+        this.recipient = recipient;
         this.sender = sender;
         this.timestamp = timestamp;
     }
@@ -26,12 +27,12 @@ public class MessageModel {
         this.message = message;
     }
 
-    public String getReceipient() {
-        return receipient;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setReceipient(String receipient) {
-        this.receipient = receipient;
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     public String getSender() {
