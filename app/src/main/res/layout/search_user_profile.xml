@@ -5,73 +5,43 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/sup_place_holder_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Search User Profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/sup_receipient_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="Recipient:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintBottom_toTopOf="@+id/sup_message_et"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sup_recipient_et" />
-
-    <EditText
-        android:id="@+id/sup_message_et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Message"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/sup_recipient_et"
-        app:layout_constraintStart_toStartOf="@+id/sup_receipient_tv" />
-
     <EditText
         android:id="@+id/sup_recipient_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Recipient"
         android:inputType="textPersonName"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/sup_message_et"
-        app:layout_constraintEnd_toStartOf="@+id/sup_send_msg_btn"
-        app:layout_constraintStart_toEndOf="@+id/sup_receipient_tv" />
+        app:layout_constraintEnd_toStartOf="@+id/sup_nav_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/sup_send_msg_btn"
+        android:id="@+id/sup_nav_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text=">"
-        app:layout_constraintBottom_toBottomOf="@+id/sup_message_et"
+        app:layout_constraintBottom_toBottomOf="@+id/sup_recipient_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sup_recipient_et" />
 
-    <Button
-        android:id="@+id/sup_tmp_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Navigate to Current Recipient"
-        app:layout_constraintBottom_toTopOf="@+id/sup_recipient_et"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sup_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sup_place_holder_text" />
+        app:layout_constraintTop_toBottomOf="@+id/sup_recipient_et">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

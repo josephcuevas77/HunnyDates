@@ -6,28 +6,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hunnydates.R;
+import com.example.hunnydates.models.MessagePreviewModel;
 import com.example.hunnydates.utils.CurrentUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 public class SearchFragment extends Fragment {
 
     private EditText recipientEditText;
-    private EditText messageEditText;
-    private Button sendMessageButton;
-    private Button tempNavigateButton;
+    private Button navigateButton;
+    private RecyclerView recyclerView;
     private NavController navController;
+    private FirestoreRecyclerAdapter adapter;
 
     public SearchFragment() {
     }
@@ -52,14 +55,54 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.search_user_profile, container, false);
         initializeComponents(view);
 
-        sendMessageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postMessageToFirestore();
-            }
-        });
+        return view;
+    }
 
-        tempNavigateButton.setOnClickListener(new View.OnClickListener() {
+    private void initializeComponents(View view) {
+        recipientEditText = view.findViewById(R.id.sup_recipient_et);
+        recyclerView = view.findViewById(R.id.sup_recycler_view);
+        navigateButton = view.findViewById(R.id.sup_nav_btn);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.client_nav_host_fragment);
+        navController = navHostFragment.getNavController();
+
+        // Query
+        Query query = CurrentUser.getInstance().getDocument()
+                .collection("messages");
+
+        // RecyclerOptions
+        FirestoreRecyclerOptions<MessagePreviewModel> options = new FirestoreRecyclerOptions.Builder<MessagePreviewModel>()
+                .setQuery(query, MessagePreviewModel.class)
+                .build();
+
+        adapter = new FirestoreRecyclerAdapter<MessagePreviewModel, SearchFragment.MessagePreviewViewHolder>(options) {
+            @NonNull
+            @Override
+            public SearchFragment.MessagePreviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_preview_item, parent, false);
+                return new SearchFragment.MessagePreviewViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull SearchFragment.MessagePreviewViewHolder holder, int position, @NonNull MessagePreviewModel model) {
+                DocumentSnapshot snapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
+                holder.clientTextView.setText(snapshot.getString("display-name"));
+                holder.clientTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("recipient", snapshot.getString("display-name"));
+                        navController.navigate(R.id.messageFragment, bundle);
+                    }
+                });
+            }
+        };
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+
+        navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
@@ -67,65 +110,28 @@ public class SearchFragment extends Fragment {
                 navController.navigate(R.id.messageFragment, bundle);
             }
         });
-
-        return view;
     }
 
-    private void initializeComponents(View view) {
-        recipientEditText = view.findViewById(R.id.sup_recipient_et);
-        messageEditText = view.findViewById(R.id.sup_message_et);
-        sendMessageButton = view.findViewById(R.id.sup_send_msg_btn);
-        tempNavigateButton = view.findViewById(R.id.sup_tmp_btn);
-        NavHostFragment navHostFragment =
-                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.client_nav_host_fragment);
-        navController = navHostFragment.getNavController();
+    private class MessagePreviewViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView clientTextView;
+
+        public MessagePreviewViewHolder(@NonNull View itemView) {
+            super(itemView);
+            clientTextView = itemView.findViewById(R.id.mpi_client_tv);
+        }
     }
 
-    private void postMessageToFirestore() {
-        Map<String, Object> messageData = new HashMap<>();
-        Map<String, Object> receiverData = new HashMap<>();
-        Map<String, Object> senderData = new HashMap<>();
-
-        String receiver = recipientEditText.getText().toString();
-        String sender = CurrentUser.getInstance().getEmail();
-        String message = messageEditText.getText().toString();
-
-        messageData.put("recipient", receiver);
-        messageData.put("sender", sender);
-        messageData.put("message", message);
-        messageData.put("time-stamp", FieldValue.serverTimestamp());
-
-        receiverData.put("display-name", receiver);
-        senderData.put("display-name", sender);
-
-        CurrentUser.getInstance()
-                .getDocument()
-                .collection("messages")
-                .document(receiver)
-                .collection("messages")
-                .add(messageData);
-
-        CurrentUser.getInstance()
-                .getDocument()
-                .collection("messages")
-                .document(receiver)
-                .set(receiverData);
-
-        FirebaseFirestore.getInstance()
-                .collection("clients")
-                .document(receiver)
-                .collection("messages")
-                .document(sender)
-                .collection("messages")
-                .add(messageData);
-
-        FirebaseFirestore.getInstance()
-                .collection("clients")
-                .document(receiver)
-                .collection("messages")
-                .document(sender)
-                .set(senderData);
-
-        Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
 }
