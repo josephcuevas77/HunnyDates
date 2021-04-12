@@ -30,7 +30,6 @@ public class ViewDatesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
-
     private FirestoreRecyclerAdapter adapter;
 
     public ViewDatesFragment() {
@@ -64,8 +63,7 @@ public class ViewDatesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.vdp_recycler_view);
 
         // Query
-        Query query = firebaseFirestore.collection("clients")
-                .document(CurrentUser.getInstance().getEmail())
+        Query query = CurrentUser.getInstance().getDocument()
                 .collection("date-plans");
 
         // RecyclerOptions
@@ -111,7 +109,6 @@ public class ViewDatesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
     }
 
     private class DatePlanViewHolder extends RecyclerView.ViewHolder {
@@ -122,8 +119,8 @@ public class ViewDatesFragment extends Fragment {
 
         public DatePlanViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.dpi_title);
-            description = itemView.findViewById(R.id.dpi_description);
+            title = itemView.findViewById(R.id.msg_sender_tv);
+            description = itemView.findViewById(R.id.msg_message_tv);
             deleteButton = itemView.findViewById(R.id.dpi_delete_btn);
         }
     }

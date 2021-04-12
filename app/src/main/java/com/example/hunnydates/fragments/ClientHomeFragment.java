@@ -35,7 +35,6 @@ public class ClientHomeFragment extends Fragment {
     private Button editProfileButton;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseFirestore database;
     private NavController navController;
 
     public ClientHomeFragment() {
@@ -67,7 +66,6 @@ public class ClientHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.client_home, container, false);
-
 
         initializeComponents(view);
         initializeGoogleSignIn();
@@ -102,15 +100,17 @@ public class ClientHomeFragment extends Fragment {
 
     private void displayCurrentUserInfo() {
         // Picasso is a library for importing images with a PhotoURL
-        Picasso.get().load(CurrentUser.getInstance().getPhotoURL()).into(profileImage);
-        profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
+        Picasso.get().load(CurrentUser.getInstance().getPhotoURL().toString()).into(profileImage);
+        if(CurrentUser.getInstance().getFamilyName() != null)
+            profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
+        else
+            profileName.setText(CurrentUser.getInstance().getGivenName());
     }
 
     private View.OnClickListener editProfileButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Toast.makeText(getActivity(), "Editing Profile Info", Toast.LENGTH_LONG).show();
-            navController.navigate(R.id.editClientFragment);
+            navController.navigate(R.id.action_cb_nav_home_to_editClientFragment);
         }
     };
 
