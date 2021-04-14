@@ -1,5 +1,10 @@
 package com.example.hunnydates.fragments;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.hunnydates.R;
@@ -42,6 +49,7 @@ public class AdminHomeFragment extends Fragment {
     private TextView profileName;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
+    public static final String CHANNEL_ID = "channel2";
 
 
     public AdminHomeFragment() {
@@ -65,6 +73,9 @@ public class AdminHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
+        notifyLogged();
+
         if (getArguments() != null) {
         }
     }
@@ -100,5 +111,38 @@ public class AdminHomeFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "HunnyDates Admin Notification";
+            String description = "admin notification channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void notifyLogged(){
+        String msg = "Welcome back " + CurrentUser.getInstance().getDisplayName() + "!";
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Hey Admin!")
+                .setContentText(msg)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                .setContentIntent(PendingIntent.getActivity(this.getActivity(), 0, new Intent(), 0));
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, builder.build());
     }
 }
