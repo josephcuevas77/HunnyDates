@@ -132,7 +132,7 @@ public class AdminHomeFragment extends Fragment {
     private void notifyLogged(){
         String msg = "Welcome back " + CurrentUser.getInstance().getDisplayName() + "!";
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this.getActivity(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Hey Admin!")
                 .setContentText(msg)
