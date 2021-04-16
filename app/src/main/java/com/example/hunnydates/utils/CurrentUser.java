@@ -1,6 +1,14 @@
 package com.example.hunnydates.utils;
 
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.net.Uri;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.example.hunnydates.R;
 import com.google.firebase.firestore.DocumentReference;
 
 /**
@@ -89,6 +97,21 @@ public final class CurrentUser {
         accountID = null;
         photoURL = null;
         document = null;
+    }
+
+    public void callNotification(Activity activity, String title, String msg, String CHANNEL_ID){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.applogo_foreground)
+                .setContentTitle(title)
+                .setContentText(msg)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                .setContentIntent(PendingIntent.getActivity(activity, 0, new Intent(), 0));
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(activity);
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(0, builder.build());
     }
 
 }

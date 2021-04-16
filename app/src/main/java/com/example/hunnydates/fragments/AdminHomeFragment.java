@@ -1,5 +1,10 @@
 package com.example.hunnydates.fragments;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.hunnydates.R;
@@ -42,6 +49,7 @@ public class AdminHomeFragment extends Fragment {
     private TextView profileName;
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
+    public static final String CHANNEL_ID = "channel 1";
 
 
     public AdminHomeFragment() {
@@ -65,6 +73,9 @@ public class AdminHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String msg = "Hey Admin " + CurrentUser.getInstance().getDisplayName() + "!";
+        CurrentUser.getInstance().callNotification(this.getActivity(), "Admin's here", msg, CHANNEL_ID);
+
         if (getArguments() != null) {
         }
     }
