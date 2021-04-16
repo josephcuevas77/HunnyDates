@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hunnydates.R;
+import com.example.hunnydates.activities.ClientActivity;
 import com.example.hunnydates.utils.CurrentUser;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -44,7 +45,7 @@ public class ClientHomeFragment extends Fragment {
     private Button logoutButton;
     private GoogleSignInClient mGoogleSignInClient;
     private NavController navController;
-    public static final String CHANNEL_ID = "channel1";
+    public static final String CHANNEL_ID = "channel 2";
 
     public ClientHomeFragment() {
         // Required empty public constructor
@@ -67,8 +68,9 @@ public class ClientHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createNotificationChannel();
-        notifyUserLogged();
+//        createNotificationChannel();
+        String msg = "Welcome back " + CurrentUser.getInstance().getDisplayName() + "!";
+        CurrentUser.getInstance().callNotification(this.getActivity(), "Welcome!", msg, CHANNEL_ID);
 
         if (getArguments() != null) {
         }
@@ -85,8 +87,6 @@ public class ClientHomeFragment extends Fragment {
 
         editProfileButton.setOnClickListener(editProfileButtonListener);
         logoutButton.setOnClickListener(logoutButtonListener);
-
-        performDatabaseActions();
 
         return view;
     }
@@ -136,68 +136,4 @@ public class ClientHomeFragment extends Fragment {
             getActivity().finish();
         }
     };
-
-    private void performDatabaseActions() {
-//        adminDatabase = FirebaseFirestore.getInstance();
-//        CollectionReference adminDB = adminDatabase.collection("Admin");
-//
-//        Map<String, Object> data1 = new HashMap<>();
-//        data1.put("email", CurrentUser.getInstance().getEmail());
-//        data1.put("id", "999999");
-//        data1.put("userName", "Hunny123");
-//        adminDB.document("Admin").set(data1, SetOptions.merge());
-//
-//        DocumentReference docRef = adminDatabase.collection("Admin").document("Admin");
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Log.d(TAG, "Document data: " + document.getData());
-//                        adminEmail.setText("Email:" + document.getString("email"));
-//                        adminID.setText("ID:" + document.getString("id"));
-//                        adminUN.setText("User Name" + document.getString("userName"));
-//                    } else {
-//                        Log.d(TAG, "No such document");
-//                    }
-//                } else {
-//                    Log.d(TAG, "get failed with ", task.getException());
-//                }
-//            }
-//        });
-    }
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "HunnyDates Notification";
-            String description = "User notification channel";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    private void notifyUserLogged(){
-        String msg = "Welcome back " + CurrentUser.getInstance().getDisplayName() + "!";
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this.getActivity(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Hey User!")
-                .setContentText(msg)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
-                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-                .setContentIntent(PendingIntent.getActivity(this.getActivity(), 0, new Intent(), 0));
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
-// notificationId is a unique int for each notification that you must define
-        notificationManager.notify(0, builder.build());
-    }
 }
