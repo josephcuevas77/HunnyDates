@@ -100,7 +100,8 @@ public class ClientHomeFragment extends Fragment {
 
     private void displayCurrentUserInfo() {
         // Picasso is a library for importing images with a PhotoURL
-        Picasso.get().load(CurrentUser.getInstance().getPhotoURL().toString()).into(profileImage);
+        String profilePicURL = CurrentUser.getInstance().getPhotoURL().toString().replace("s96", "s384");
+        Picasso.get().load(profilePicURL).into(profileImage);
         if(CurrentUser.getInstance().getFamilyName() != null)
             profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
         else
