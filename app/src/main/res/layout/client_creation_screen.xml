@@ -22,7 +22,7 @@ Editable
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/ec_profile_card_view"
+            android:id="@+id/cc_profile_card_view"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="25dp"
@@ -33,7 +33,7 @@ Editable
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/ec_profile_icon"
+                android:id="@+id/cc_profile_icon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -41,87 +41,107 @@ Editable
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/ec_username_text_view"
+            android:id="@+id/cc_username_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Username"
-            app:layout_constraintStart_toStartOf="@+id/ec_username_edit_text"
-            app:layout_constraintTop_toBottomOf="@+id/ec_profile_card_view" />
+            app:layout_constraintStart_toStartOf="@+id/cc_username_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/cc_profile_card_view" />
 
         <EditText
-            android:id="@+id/ec_username_edit_text"
+            android:id="@+id/cc_username_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/ec_username_text_view"
+            app:layout_constraintTop_toBottomOf="@id/cc_username_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/ec_name_text_view"
+            android:id="@+id/cc_display_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Display Name"
-            app:layout_constraintStart_toStartOf="@+id/ec_name_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/ec_username_edit_text" />
+            app:layout_constraintStart_toStartOf="@+id/cc_display_name_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/cc_username_edit_text" />
 
         <EditText
-            android:id="@+id/ec_name_edit_text"
+            android:id="@+id/cc_display_name_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            app:layout_constraintTop_toBottomOf="@id/ec_name_text_view"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/cc_display_name_text_view" />
 
         <TextView
-            android:id="@+id/ec_age_text_view"
+            android:id="@+id/cc_age_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Age"
-            app:layout_constraintStart_toStartOf="@+id/ec_age_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/ec_name_edit_text" />
+            app:layout_constraintStart_toStartOf="@+id/cc_age_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/cc_display_name_edit_text" />
 
         <EditText
-            android:id="@+id/ec_age_edit_text"
+            android:id="@+id/cc_age_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
-            app:layout_constraintTop_toBottomOf="@id/ec_age_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/cc_age_text_view" />
 
         <TextView
-            android:id="@+id/ec_description_text_view"
+            android:id="@+id/cc_description_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
-            app:layout_constraintStart_toStartOf="@+id/ec_description_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/ec_age_edit_text" />
+            app:layout_constraintStart_toStartOf="@+id/cc_description_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/cc_age_edit_text" />
 
         <EditText
-            android:id="@+id/ec_description_edit_text"
+            android:id="@+id/cc_description_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:ems="10"
             android:inputType="textMultiLine"
             android:maxLength="500"
-            app:layout_constraintEnd_toEndOf="@+id/ec_age_edit_text"
-            app:layout_constraintStart_toStartOf="@+id/ec_age_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/ec_description_text_view" />
+            app:layout_constraintEnd_toEndOf="@+id/cc_age_edit_text"
+            app:layout_constraintStart_toStartOf="@+id/cc_age_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/cc_description_text_view" />
 
-        <Button
-            android:id="@+id/ec_create_account_button"
+        <TextView
+            android:id="@+id/cc_referral_code_text_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update Info"
-            app:layout_constraintTop_toBottomOf="@id/ec_description_edit_text"
+            android:layout_marginTop="8dp"
+            android:text="Referral Code"
+            app:layout_constraintStart_toStartOf="@+id/cc_description_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/cc_description_edit_text" />
+
+        <EditText
+            android:id="@+id/cc_referral_code_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@id/cc_referral_code_text_field"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/cc_create_account_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Account!"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/cc_referral_code_edit_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

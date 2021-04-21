@@ -28,6 +28,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -91,6 +92,7 @@ public class LoginFragment extends Fragment {
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSIO);
 
         database = FirebaseFirestore.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,20 +159,14 @@ public class LoginFragment extends Fragment {
     private void loginToHunnyDates(FirebaseUser fUser){
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
         if(fUser != null){
-            CurrentUser.getInstance().setDisplayName(account.getDisplayName());
-            CurrentUser.getInstance().setGivenName(account.getGivenName());
-            CurrentUser.getInstance().setFamilyName(account.getFamilyName());
-            CurrentUser.getInstance().setEmail(account.getEmail());
-            CurrentUser.getInstance().setAccountID(account.getId());
-            CurrentUser.getInstance().setPhotoURL(account.getPhotoUrl());
-
-            databaseOperations();
+            databaseOperations(account);
         }
     }
 
-    private void databaseOperations() {
-        String documentID = CurrentUser.getInstance().getEmail().toLowerCase();
+    private void databaseOperations(GoogleSignInAccount account) {
+        String documentID = account.getEmail().toLowerCase();
         DocumentReference documentReferenceAdmin = database.collection("admins").document(documentID);
+        DocumentReference documentReferenceClient = database.collection("clients").document(documentID);
         documentReferenceAdmin.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -181,25 +177,24 @@ public class LoginFragment extends Fragment {
                         CurrentUser.getInstance().setDocument(database.collection("admins").document(documentID));
                         signInButton.setEnabled(true);
                     } else {
-                        DocumentReference documentReferenceClient = database.collection("clients").document(documentID);
                         documentReferenceClient.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
+                                        CurrentUser.getInstance().setDocument(documentReferenceClient);
+                                        CurrentUser.getInstance().queryProfileInfo();
                                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
-                                        CurrentUser.getInstance().setDocument(database.collection("clients").document(documentID));
                                         signInButton.setEnabled(true);
                                     } else {
-                                        Map<String, Object> clientData = new HashMap<>();
-                                        clientData.put("email", CurrentUser.getInstance().getEmail());
-                                        clientData.put("username", CurrentUser.getInstance().getDisplayName());
-                                        clientData.put("display-name", CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
-                                        clientData.put("profile-url", CurrentUser.getInstance().getPhotoURL().toString());
-                                        database.collection("clients").document(documentID).set(clientData);
-                                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
-                                        CurrentUser.getInstance().setDocument(database.collection("clients").document(documentID));
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("email", account.getEmail());
+                                        bundle.putString("username", account.getDisplayName());
+                                        bundle.putString("display-name", account.getGivenName() + " " + account.getFamilyName());
+                                        bundle.putString("profile-url", account.getPhotoUrl().toString());
+                                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientCreationFragment, bundle);
+                                        CurrentUser.getInstance().setDocument(documentReferenceClient);
                                         signInButton.setEnabled(true);
                                     }
                                 }

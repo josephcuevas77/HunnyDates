@@ -18,47 +18,49 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditClientFragment extends Fragment {
+public class ClientCreationFragment extends Fragment {
 
     private ImageView profileImage;
     private EditText usernameEditText;
     private EditText displayNameEditText;
     private EditText ageEditText;
     private EditText descriptionEditText;
-    private Button editInfoButton;
+    private EditText referralCodeEditText;
+    private Button createAccountButton;
 
-    public EditClientFragment() {
-    }
+    private String email, profileURL, username, displayName;
 
-    public static EditClientFragment newInstance(String param1, String param2) {
-        EditClientFragment fragment = new EditClientFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public ClientCreationFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            email = getArguments().getString("email");
+            profileURL = getArguments().getString("profile-url");
+            username = getArguments().getString("username");
+            displayName = getArguments().getString("displayName");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.edit_client_profile_information, container, false);
+        View view = inflater.inflate(R.layout.client_creation_screen, container, false);
         initializeComponents(view);
 
-        editInfoButton.setOnClickListener(new View.OnClickListener() {
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, Object> data = new HashMap();
+                Map<String, String> data = new HashMap();
+                data.put("email", email);
                 data.put("display-name", displayNameEditText.getText().toString());
                 data.put("username", usernameEditText.getText().toString());
                 data.put("age", ageEditText.getText().toString());
+                data.put("profile-url", profileURL);
                 data.put("description", descriptionEditText.getText().toString());
-                CurrentUser.getInstance().getDocument().update(data);
+                CurrentUser.getInstance().getDocument().set(data);
                 CurrentUser.getInstance().queryProfileInfo();
                 NavHostFragment.findNavController(getParentFragment()).popBackStack();
             }
@@ -68,18 +70,17 @@ public class EditClientFragment extends Fragment {
     }
 
     private void initializeComponents(View view) {
-        profileImage = view.findViewById(R.id.ec_profile_icon);
-        displayNameEditText = view.findViewById(R.id.ec_name_edit_text);
-        usernameEditText = view.findViewById(R.id.ec_username_edit_text);
-        ageEditText = view.findViewById(R.id.ec_age_edit_text);
-        descriptionEditText = view.findViewById(R.id.ec_description_edit_text);
-        editInfoButton = view.findViewById(R.id.ec_create_account_button);
+        profileImage = view.findViewById(R.id.cc_profile_icon);
+        usernameEditText = view.findViewById(R.id.cc_username_edit_text);
+        displayNameEditText = view.findViewById(R.id.cc_display_name_edit_text);
+        ageEditText = view.findViewById(R.id.cc_age_edit_text);
+        descriptionEditText = view.findViewById(R.id.cc_description_edit_text);
+        referralCodeEditText = view.findViewById(R.id.cc_referral_code_edit_text);
+        createAccountButton = view.findViewById(R.id.cc_create_account_button);
 
-        String profilePicURL = CurrentUser.getInstance().getPhotoURL().replace("s96", "s384");
+        String profilePicURL = profileURL.replace("s96", "s384");
         Picasso.get().load(profilePicURL).into(profileImage);
-        displayNameEditText.setText(CurrentUser.getInstance().getDisplayName());
-        usernameEditText.setText(CurrentUser.getInstance().getUsername());
-        ageEditText.setText(CurrentUser.getInstance().getAge());
-        descriptionEditText.setText(CurrentUser.getInstance().getDescription());
+        usernameEditText.setText(username);
+        displayNameEditText.setText(displayName);
     }
 }
