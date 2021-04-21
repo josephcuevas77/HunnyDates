@@ -16,7 +16,16 @@
         <action
             android:id="@+id/action_loginScreen_to_adminActivity"
             app:destination="@id/adminActivity" />
+        <action
+            android:id="@+id/action_loginScreen_to_clientCreationFragment"
+            app:destination="@id/clientCreationFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/clientCreationFragment"
+        android:name="com.example.hunnydates.fragments.ClientCreationFragment"
+        android:label="ClientCreationFragment"
+        tools:layout="@layout/client_creation_screen" />
     <activity
         android:id="@+id/clientActivity"
         android:name="com.example.hunnydates.activities.ClientActivity"

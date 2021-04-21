@@ -90,7 +90,7 @@ public class AdminHomeFragment extends Fragment {
         logoutButton = view.findViewById(R.id.ah_logout_button);
 
         Picasso.get().load(CurrentUser.getInstance().getPhotoURL()).into(profileImage);
-        profileName.setText(CurrentUser.getInstance().getGivenName() + " " + CurrentUser.getInstance().getFamilyName());
+        profileName.setText(CurrentUser.getInstance().getDisplayName());
 
         GoogleSignInOptions googleSIO = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))

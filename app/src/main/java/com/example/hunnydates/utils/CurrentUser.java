@@ -5,11 +5,19 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hunnydates.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Current User: Singleton Class
@@ -19,11 +27,13 @@ import com.google.firebase.firestore.DocumentReference;
 public final class CurrentUser {
     private static CurrentUser currentUser = new CurrentUser();
 
+    private Map<String, String> profileInfoMap = new HashMap<>();
+
     private String displayName = null;
     private String givenName = null;
     private String familyName = null;
+    private String age = null;
     private String email = null;
-    private String accountID = null;
     private Uri photoURL = null;
     private DocumentReference document = null;
 
@@ -33,53 +43,27 @@ public final class CurrentUser {
         return currentUser;
     }
 
+    public Map<String, String> getProfileInfoMap() { return profileInfoMap; }
+
+    public String getUsername() {
+        return profileInfoMap.get("username");
+    }
+
     public String getDisplayName() {
-        return displayName;
+        return profileInfoMap.get("display-name");
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getGivenName() {
-        return givenName;
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
-
-    public String getFamilyName() {
-        return familyName;
-    }
-
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
-    }
+    public String getAge() { return profileInfoMap.get("age"); }
 
     public String getEmail() {
-        return email;
+        return profileInfoMap.get("email");
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getPhotoURL() {
+        return profileInfoMap.get("profile-url");
     }
 
-    public String getAccountID() {
-        return accountID;
-    }
-
-    public void setAccountID(String accountID) {
-        this.accountID = accountID;
-    }
-
-    public Uri getPhotoURL() {
-        return photoURL;
-    }
-
-    public void setPhotoURL(Uri photoURL) {
-        this.photoURL = photoURL;
-    }
+    public String getDescription() { return profileInfoMap.get("description"); }
 
     public void setDocument(DocumentReference document) {
         this.document = document;
@@ -89,12 +73,43 @@ public final class CurrentUser {
         return document;
     }
 
+    public void queryProfileInfo() {
+        document.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot userDocument = task.getResult();
+                    if (userDocument.exists()) {
+                        String username = userDocument.getString("username");
+                        String displayName = userDocument.getString("display-name");
+                        String email = userDocument.getString("email");
+                        String age = userDocument.getString("age");
+                        String profileURL = userDocument.getString("profile-url");
+                        String description = userDocument.getString("description");
+
+                        profileInfoMap.put("username", username);
+                        profileInfoMap.put("display-name", displayName);
+                        profileInfoMap.put("email", email);
+                        profileInfoMap.put("age", age);
+                        profileInfoMap.put("profile-url", profileURL);
+                        profileInfoMap.put("description", description);
+                    }
+                }
+            }
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void clearCurrentUserInfo() {
         displayName = null;
         givenName = null;
         familyName = null;
         email = null;
-        accountID = null;
         photoURL = null;
         document = null;
     }
@@ -113,5 +128,4 @@ public final class CurrentUser {
 // notificationId is a unique int for each notification that you must define
         notificationManager.notify(0, builder.build());
     }
-
 }
