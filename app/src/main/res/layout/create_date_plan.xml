@@ -28,23 +28,25 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Name" />
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/dp_search_button">
 
         <EditText
-            android:gravity="top|left"
             android:id="@+id/dp_description_et"
             android:layout_width="250dp"
             android:layout_height="150dp"
             android:background="@drawable/edit_text_border"
             android:ems="10"
+            android:gravity="top|left"
             android:inputType="textMultiLine"
             android:maxLength="150"
             android:paddingLeft="5dp"
@@ -67,10 +69,51 @@
         android:id="@+id/dp_create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="Create Date Plan"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
+    <Button
+        android:id="@+id/dp_search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:onClick="startAutocompleteActivity"
+        android:text="Find a Place"
+        app:layout_constraintEnd_toEndOf="@+id/dp_place_selected"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintStart_toStartOf="@+id/dp_place_selected"
+        app:layout_constraintTop_toBottomOf="@+id/dp_place_selected" />
+
+    <TextView
+        android:id="@+id/dp_place_selected"
+        android:layout_width="208dp"
+        android:layout_height="205dp"
+        android:background="@drawable/edit_text_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dp_image_view" />
+
+    <TextView
+        android:id="@+id/dp_place_info"
+        android:layout_width="105dp"
+        android:layout_height="29dp"
+        android:text="Place Selected:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <ImageView
+        android:id="@+id/dp_image_view"
+        android:layout_width="300dp"
+        android:layout_height="175dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dp_place_info"
+        android:scaleType="fitXY"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
