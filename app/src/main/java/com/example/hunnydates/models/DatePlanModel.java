@@ -14,12 +14,14 @@ public class DatePlanModel {
 
     private String title;
     private String description;
+    private String location;
 
     private DatePlanModel() {}
 
-    private DatePlanModel(String title, String description) {
+    private DatePlanModel(String title, String description, String location) {
         this.title = title;
         this.description = description;
+        this.location = location;
     }
 
     public String getTitle() {
@@ -37,5 +39,9 @@ public class DatePlanModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) { this.location = location; }
 
 }

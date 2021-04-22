@@ -35,7 +35,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dp_search_button">
@@ -69,8 +69,10 @@
         android:id="@+id/dp_create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="12dp"
         android:text="Create Date Plan"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
@@ -79,7 +81,7 @@
         android:id="@+id/dp_search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:onClick="startAutocompleteActivity"
         android:text="Find a Place"
@@ -90,12 +92,15 @@
 
     <TextView
         android:id="@+id/dp_place_selected"
-        android:layout_width="208dp"
-        android:layout_height="205dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/edit_text_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dp_image_view"
+        app:layout_constraintStart_toStartOf="@+id/dp_image_view"
         app:layout_constraintTop_toBottomOf="@+id/dp_image_view" />
 
     <TextView

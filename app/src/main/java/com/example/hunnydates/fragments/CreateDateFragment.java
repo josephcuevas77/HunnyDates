@@ -125,6 +125,7 @@ public class CreateDateFragment extends Fragment {
 
         dateData.put("title", dateTitle.getText().toString());
         dateData.put("description", dateDesc.getText().toString());
+        dateData.put("location", placeSelected.getText().toString());
 
         CurrentUser.getInstance().getDocument()
                 .collection("date-plans")
@@ -140,8 +141,8 @@ public class CreateDateFragment extends Fragment {
                         Place.Field.PHOTO_METADATAS, Place.Field.ID))
                 .setTypeFilter(TypeFilter.ESTABLISHMENT)
                 .setLocationBias(RectangularBounds.newInstance(
-                        new LatLng(33.6846,117.8265),
-                        new LatLng(34.0522, 118.2437)))
+                        new LatLng(33.6846,117.8265), //Irvine
+                        new LatLng(34.0522, 118.2437))) //LA
                 .setCountries(Arrays.asList("US"))
                 .build(this.getActivity().getApplicationContext());
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
@@ -171,7 +172,6 @@ public class CreateDateFragment extends Fragment {
                 final ApiException apiException = (ApiException) exception;
                 Log.e(TAG, "Place not found: " + exception.getMessage());
                 final int statusCode = apiException.getStatusCode();
-                // TODO: Handle error with given status code.
             }
         });
     }

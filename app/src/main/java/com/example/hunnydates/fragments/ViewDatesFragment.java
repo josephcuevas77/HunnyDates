@@ -90,6 +90,7 @@ public class ViewDatesFragment extends Fragment {
                 DocumentSnapshot snapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
                 holder.title.setText(model.getTitle());
                 holder.description.setText(model.getDescription());
+                holder.location.setText(model.getLocation());
                 holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -121,12 +122,14 @@ public class ViewDatesFragment extends Fragment {
 
         private TextView title;
         private TextView description;
+        private TextView location;
         private Button deleteButton;
 
         public DatePlanViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.msg_sender_tv);
-            description = itemView.findViewById(R.id.msg_message_tv);
+            title = itemView.findViewById(R.id.dpi_title_tv);
+            description = itemView.findViewById(R.id.dpi_desc_tv);
+            location = itemView.findViewById(R.id.dpi_location_tv);
             deleteButton = itemView.findViewById(R.id.dpi_delete_btn);
         }
     }
