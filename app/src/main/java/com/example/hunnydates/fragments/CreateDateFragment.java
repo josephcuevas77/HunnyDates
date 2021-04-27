@@ -126,6 +126,8 @@ public class CreateDateFragment extends Fragment {
         dateData.put("title", dateTitle.getText().toString());
         dateData.put("description", dateDesc.getText().toString());
         dateData.put("location", placeSelected.getText().toString());
+        dateData.put("rating", 0);
+        dateData.put("ratingCount", 0);
 
         CurrentUser.getInstance().getDocument()
                 .collection("date-plans")
