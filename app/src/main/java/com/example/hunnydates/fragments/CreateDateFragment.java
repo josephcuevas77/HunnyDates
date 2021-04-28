@@ -31,6 +31,10 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -123,15 +127,15 @@ public class CreateDateFragment extends Fragment {
     private void postDateToFirestore() {
         Map<String, Object> dateData = new HashMap<>();
 
+        dateData.put("id", CurrentUser.getInstance().getEmail());
+        dateData.put("user", CurrentUser.getInstance().getDisplayName());
         dateData.put("title", dateTitle.getText().toString());
         dateData.put("description", dateDesc.getText().toString());
         dateData.put("location", placeSelected.getText().toString());
-        dateData.put("rating", 0);
         dateData.put("ratingCount", 0);
 
-        CurrentUser.getInstance().getDocument()
-                .collection("date-plans")
-                .add(dateData);
+        CollectionReference collectionReferenceDatePlans = CurrentUser.getInstance().getDatePlansCollections();
+        collectionReferenceDatePlans.add(dateData);
 
         Toast.makeText(getActivity(), "Date Plan Added", Toast.LENGTH_SHORT).show();
     }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,8 +70,8 @@ public class ViewDatesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.vdp_recycler_view);
 
         // Query
-        Query query = CurrentUser.getInstance().getDocument()
-                .collection("date-plans");
+        Query query = CurrentUser.getInstance().getDatePlansCollections()
+                .whereEqualTo("id", CurrentUser.getInstance().getEmail());
 
         // RecyclerOptions
         FirestoreRecyclerOptions<DatePlanModel> options = new FirestoreRecyclerOptions.Builder<DatePlanModel>()
@@ -91,10 +92,12 @@ public class ViewDatesFragment extends Fragment {
                 holder.title.setText(model.getTitle());
                 holder.description.setText(model.getDescription());
                 holder.location.setText(model.getLocation());
+                holder.user.setText(model.getUser());
+                holder.rating.setText("Rating: " + model.getRatingsCount());
                 holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CurrentUser.getInstance().getDocument().collection("date-plans").document(snapshot.getId())
+                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -106,6 +109,60 @@ public class ViewDatesFragment extends Fragment {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Log.w(TAG, "Error deleting document", e);
+                                    }
+                                });
+                    }
+                });
+                holder.upButton.setOnClickListener(new View.OnClickListener() {
+                    DatePlanModel d = new DatePlanModel(
+                            model.getUser(),
+                            model.getTitle(),
+                            model.getDescription(),
+                            model.getLocation(),
+                            model.getRatingsCount() + 1,
+                            model.getId()
+                    );
+
+                    public void onClick(View view) {
+                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
+                        .set(d)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Document successfully edited!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error editing document", e);
+                            }
+                        });
+                    }
+                });
+                holder.downButton.setOnClickListener(new View.OnClickListener() {
+                    DatePlanModel d = new DatePlanModel(
+                            model.getUser(),
+                            model.getTitle(),
+                            model.getDescription(),
+                            model.getLocation(),
+                            model.getRatingsCount() - 1,
+                            model.getId()
+                    );
+
+                    public void onClick(View view) {
+                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
+                                .set(d)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "Document successfully edited!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error editing document", e);
                                     }
                                 });
                     }
@@ -123,7 +180,11 @@ public class ViewDatesFragment extends Fragment {
         private TextView title;
         private TextView description;
         private TextView location;
+        private TextView user;
+        private TextView rating;
         private Button deleteButton;
+        private Button upButton;
+        private Button downButton;
 
         public DatePlanViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -131,6 +192,10 @@ public class ViewDatesFragment extends Fragment {
             description = itemView.findViewById(R.id.dpi_desc_tv);
             location = itemView.findViewById(R.id.dpi_location_tv);
             deleteButton = itemView.findViewById(R.id.dpi_delete_btn);
+            upButton = itemView.findViewById(R.id.dpi_up_button);
+            downButton = itemView.findViewById(R.id.dpi_down_button);
+            user = itemView.findViewById(R.id.dpi_user_tv);
+            rating = itemView.findViewById(R.id.dpi_rating_tv);
         }
     }
 
