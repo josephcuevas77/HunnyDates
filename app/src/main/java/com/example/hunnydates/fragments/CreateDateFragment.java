@@ -42,7 +42,7 @@ import static android.app.Activity.RESULT_CANCELED;
 public class CreateDateFragment extends Fragment {
 
     private static final String TAG = "placesAPI";
-    private static final String TAG1 = "onAct";
+    private static final String TAG1 = "bitmap";
 
     private final int RESULT_OK = -1;
     private final int AUTOCOMPLETE_REQUEST_CODE = 1;
@@ -166,6 +166,7 @@ public class CreateDateFragment extends Fragment {
                 .build();
         placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
             Bitmap bitmap = fetchPhotoResponse.getBitmap();
+            Log.i(TAG1, "Bitmap to String attempt: " + bitmap.toString());
             placeImage.setImageBitmap(bitmap);
         }).addOnFailureListener((exception) -> {
             if (exception instanceof ApiException) {
