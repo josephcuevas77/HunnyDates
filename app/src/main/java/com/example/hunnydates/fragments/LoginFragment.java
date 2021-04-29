@@ -174,7 +174,11 @@ public class LoginFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_adminActivity);
-                        CurrentUser.getInstance().setDocument(database.collection("admins").document(documentID));
+                        CurrentUser.getInstance().setDocument(database.collection("admins").document(documentID));try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         signInButton.setEnabled(true);
                     } else {
                         documentReferenceClient.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -185,7 +189,11 @@ public class LoginFragment extends Fragment {
                                     if (document.exists()) {
                                         CurrentUser.getInstance().setDocument(documentReferenceClient);
                                         CurrentUser.getInstance().queryProfileInfo();
-                                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);
+                                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientActivity);try {
+                                            Thread.sleep(1000);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
                                         signInButton.setEnabled(true);
                                     } else {
                                         Bundle bundle = new Bundle();
@@ -195,6 +203,11 @@ public class LoginFragment extends Fragment {
                                         bundle.putString("profile-url", account.getPhotoUrl().toString());
                                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_clientCreationFragment, bundle);
                                         CurrentUser.getInstance().setDocument(documentReferenceClient);
+                                        try {
+                                            Thread.sleep(1000);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
                                         signInButton.setEnabled(true);
                                     }
                                 }
@@ -202,6 +215,11 @@ public class LoginFragment extends Fragment {
                         });
                     }
                 } else {
+                    try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                     signInButton.setEnabled(true);
                 }
             }
