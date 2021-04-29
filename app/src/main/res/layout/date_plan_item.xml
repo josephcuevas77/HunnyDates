@@ -43,8 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="Delete"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/dpi_location_tv"
@@ -61,6 +60,40 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/dpi_down_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/dpi_up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Up"
+                app:layout_constraintEnd_toStartOf="@+id/dpi_down_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dpi_user_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User"
+                app:layout_constraintStart_toStartOf="@+id/dpi_location_tv"
+                app:layout_constraintTop_toBottomOf="@+id/dpi_location_tv" />
+
+            <TextView
+                android:id="@+id/dpi_rating_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating"
+                app:layout_constraintStart_toStartOf="@+id/dpi_user_tv"
+                app:layout_constraintTop_toBottomOf="@+id/dpi_user_tv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

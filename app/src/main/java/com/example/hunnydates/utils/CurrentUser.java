@@ -13,8 +13,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.hunnydates.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,6 +115,13 @@ public final class CurrentUser {
         email = null;
         photoURL = null;
         document = null;
+    }
+
+    public CollectionReference getDatePlansCollections() {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        return database.collection("date-plans");
     }
 
     public void callNotification(Activity activity, String title, String msg, String CHANNEL_ID){

@@ -15,14 +15,34 @@ public class DatePlanModel {
     private String title;
     private String description;
     private String location;
+    private String user;
+    private String id;
+    private int ratingsCount;
 
     private DatePlanModel() {}
 
-    private DatePlanModel(String title, String description, String location) {
+    public DatePlanModel(String user, String title, String description, String location, int ratingsCount, String id) {
+        this.user = user;
         this.title = title;
         this.description = description;
         this.location = location;
+        this.ratingsCount = ratingsCount;
+        this.id = id;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) { this.user = user; }
 
     public String getTitle() {
         return title;
@@ -43,5 +63,9 @@ public class DatePlanModel {
     public String getLocation() { return location; }
 
     public void setLocation(String location) { this.location = location; }
+
+    public int getRatingsCount() { return ratingsCount; }
+
+    public void setRatingsCount(int ratingsCount) { this.ratingsCount = ratingsCount; }
 
 }
