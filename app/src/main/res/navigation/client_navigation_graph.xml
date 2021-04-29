@@ -19,18 +19,22 @@
         android:label="MatchesFragment"
         tools:layout="@layout/view_matches" />
     <fragment
-        android:id="@+id/cb_nav_dp_list"
-        android:name="com.example.hunnydates.fragments.SearchFragment"
-        android:label="CreateDateFragment"
-        tools:layout="@layout/create_date_plan" />
-    <fragment
         android:id="@+id/cb_nav_create"
         android:name="com.example.hunnydates.fragments.CreateDateFragment"
+        android:label="CreateDateFragment"
+        tools:layout="@layout/create_date_plan" >
+        <action
+            android:id="@+id/action_cb_nav_create_to_cb_nav_dp_list"
+            app:destination="@id/cb_nav_dp_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/cb_nav_dp_list"
+        android:name="com.example.hunnydates.fragments.ViewDatesFragment"
         android:label="ViewDatesFragment"
         tools:layout="@layout/view_date_plans" />
     <fragment
         android:id="@+id/cb_nav_search"
-        android:name="com.example.hunnydates.fragments.ViewDatesFragment"
+        android:name="com.example.hunnydates.fragments.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/search_user_profile" />
     <fragment

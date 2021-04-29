@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hunnydates.R;
 import com.example.hunnydates.utils.CurrentUser;
@@ -108,6 +110,7 @@ public class CreateDateFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 postDateToFirestore();
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_cb_nav_create_to_cb_nav_dp_list);
             }
         });
 
