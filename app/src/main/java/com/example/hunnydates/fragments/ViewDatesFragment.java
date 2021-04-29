@@ -1,13 +1,12 @@
 package com.example.hunnydates.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,15 +19,12 @@ import com.example.hunnydates.models.DatePlanModel;
 import com.example.hunnydates.utils.CurrentUser;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import java.util.Arrays;
+import com.squareup.picasso.Picasso;
 
 import static android.content.ContentValues.TAG;
 
@@ -93,7 +89,8 @@ public class ViewDatesFragment extends Fragment {
                 holder.description.setText(model.getDescription());
                 holder.location.setText(model.getLocation());
                 holder.user.setText(model.getUser());
-                holder.rating.setText("Rating: " + model.getRatingsCount());
+                holder.rating.setText("Rating: " + model.getRating_count());
+                Picasso.get().load(model.getImage_url()).into(holder.imageView);
                 holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -119,8 +116,9 @@ public class ViewDatesFragment extends Fragment {
                             model.getTitle(),
                             model.getDescription(),
                             model.getLocation(),
-                            model.getRatingsCount() + 1,
-                            model.getId()
+                            model.getRating_count() + 1,
+                            model.getId(),
+                            model.getImage_url()
                     );
 
                     public void onClick(View view) {
@@ -146,8 +144,9 @@ public class ViewDatesFragment extends Fragment {
                             model.getTitle(),
                             model.getDescription(),
                             model.getLocation(),
-                            model.getRatingsCount() - 1,
-                            model.getId()
+                            model.getRating_count() - 1,
+                            model.getId(),
+                            model.getImage_url()
                     );
 
                     public void onClick(View view) {
@@ -185,6 +184,7 @@ public class ViewDatesFragment extends Fragment {
         private Button deleteButton;
         private Button upButton;
         private Button downButton;
+        private ImageView imageView;
 
         public DatePlanViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -196,6 +196,7 @@ public class ViewDatesFragment extends Fragment {
             downButton = itemView.findViewById(R.id.dpi_down_button);
             user = itemView.findViewById(R.id.dpi_user_tv);
             rating = itemView.findViewById(R.id.dpi_rating_tv);
+            imageView = itemView.findViewById(R.id.dpi_imageView);
         }
     }
 

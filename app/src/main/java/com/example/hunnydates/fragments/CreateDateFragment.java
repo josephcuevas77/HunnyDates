@@ -26,6 +26,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.FetchPhotoResponse;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
@@ -35,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,6 +46,8 @@ import java.util.Map;
 import static android.app.Activity.RESULT_CANCELED;
 
 public class CreateDateFragment extends Fragment {
+
+    private static final String API_KEY = "AIzaSyDk1EqoqRzGwNDEVPojmXsDklfbLnx_H9E";
 
     private static final String TAG = "placesAPI";
     private static final String TAG1 = "bitmap";
@@ -56,6 +60,7 @@ public class CreateDateFragment extends Fragment {
     private Button searchButton;
     private TextView placeSelected;
     private ImageView placeImage;
+    private String url;
 
     public CreateDateFragment() {
     }
@@ -71,7 +76,8 @@ public class CreateDateFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK){
             Place place = Autocomplete.getPlaceFromIntent(data);
-            fetchPhoto(place);
+            url = fetchPhoto(place);
+            Picasso.get().load(url).into(placeImage);
             Log.i(TAG, "Place: " + place.getName() + ", " + place.getAddress());
             Toast.makeText(getActivity().getApplicationContext(), "Place: " + place.getName() + ", " + place.getId(), Toast.LENGTH_LONG).show();
             placeSelected.setText(place.getName() + "\n" + place.getAddress() + "\n" +
@@ -132,7 +138,8 @@ public class CreateDateFragment extends Fragment {
         dateData.put("title", dateTitle.getText().toString());
         dateData.put("description", dateDesc.getText().toString());
         dateData.put("location", placeSelected.getText().toString());
-        dateData.put("ratingCount", 0);
+        dateData.put("rating_count", 0);
+        dateData.put("image_url", url);
 
         CollectionReference collectionReferenceDatePlans = CurrentUser.getInstance().getDatePlansCollections();
         collectionReferenceDatePlans.add(dateData);
@@ -154,7 +161,7 @@ public class CreateDateFragment extends Fragment {
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
     }
 
-    public void fetchPhoto(Place place){
+    public String fetchPhoto(Place place){
         PlacesClient placesClient = Places.createClient(getActivity().getApplicationContext());
         final String placeId = place.getId();
         final List<Place.Field> fields = Collections.singletonList(Place.Field.PHOTO_METADATAS);
@@ -162,24 +169,21 @@ public class CreateDateFragment extends Fragment {
         final List<PhotoMetadata> metadata = place.getPhotoMetadatas();
         if (metadata == null || metadata.isEmpty()) {
             Log.w(TAG, "No photo metadata.");
-            return;
+            return "No photo metadata.";
         }
         final PhotoMetadata photoMetadata = metadata.get(0);
 
-        final String attributions = photoMetadata.getAttributions();
+        String[] data = photoMetadata.toString().split(", ");
+        String photoReference = "";
+        for(String field: data) {
+            if(field.contains("photoReference"))
+                photoReference += field;
+        }
+        photoReference = photoReference.replace("}","");
+        photoReference = photoReference.replace("photoReference","photoreference");
 
-        final FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(photoMetadata)
-                .build();
-        placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
-            Bitmap bitmap = fetchPhotoResponse.getBitmap();
-            Log.i(TAG1, "Bitmap to String attempt: " + bitmap.toString());
-            placeImage.setImageBitmap(bitmap);
-        }).addOnFailureListener((exception) -> {
-            if (exception instanceof ApiException) {
-                final ApiException apiException = (ApiException) exception;
-                Log.e(TAG, "Place not found: " + exception.getMessage());
-                final int statusCode = apiException.getStatusCode();
-            }
-        });
+        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&maxheight=700&"+photoReference+"&key="+API_KEY;
+
+        return url;
     }
 }
