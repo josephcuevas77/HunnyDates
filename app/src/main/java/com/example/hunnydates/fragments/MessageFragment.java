@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -71,7 +72,7 @@ public class MessageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.client_messaging_display, container, false);
+        View view = inflater.inflate(R.layout.message_display, container, false);
         initializeComponents(view);
         initializeInstanceVariables();
         recyclerViewCode();
@@ -91,6 +92,15 @@ public class MessageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 postMessageToFirestore();
+            }
+        });
+        clientProfilePicture.setClickable(true);
+        clientProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", recipientEmail);
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_messageFragment_to_viewUserProfile, bundle);
             }
         });
     }
@@ -140,9 +150,9 @@ public class MessageFragment extends Fragment {
             public MessageFragment.MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view;
                 if(viewType == 1)
-                    view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.sender_message_item, parent, false);
+                    view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_sender_item, parent, false);
                 else
-                    view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiver_message_item, parent, false);
+                    view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_receiver_item, parent, false);
                 recyclerView.scrollToPosition(adapter.getItemCount()-1);
                 return new MessageFragment.MessageViewHolder(view);
             }

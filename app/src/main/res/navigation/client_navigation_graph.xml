@@ -22,7 +22,7 @@
         android:id="@+id/cb_nav_create"
         android:name="com.example.hunnydates.fragments.CreateDateFragment"
         android:label="CreateDateFragment"
-        tools:layout="@layout/create_date_plan" >
+        tools:layout="@layout/date_plan_create" >
         <action
             android:id="@+id/action_cb_nav_create_to_cb_nav_dp_list"
             app:destination="@id/cb_nav_dp_list" />
@@ -33,10 +33,14 @@
         android:label="ViewDatesFragment"
         tools:layout="@layout/view_date_plans" />
     <fragment
-        android:id="@+id/cb_nav_search"
-        android:name="com.example.hunnydates.fragments.SearchFragment"
+        android:id="@+id/cb_nav_msg_preview"
+        android:name="com.example.hunnydates.fragments.MessagePreviewFragment"
         android:label="SearchFragment"
-        tools:layout="@layout/search_user_profile" />
+        tools:layout="@layout/message_preview" >
+        <action
+            android:id="@+id/action_cb_nav_msg_preview_to_viewUserProfile"
+            app:destination="@id/viewUserProfile" />
+    </fragment>
     <fragment
         android:id="@+id/editClientFragment"
         android:name="com.example.hunnydates.fragments.EditClientFragment"
@@ -46,5 +50,14 @@
         android:id="@+id/messageFragment"
         android:name="com.example.hunnydates.fragments.MessageFragment"
         android:label="MessageFragment"
-        tools:layout="@layout/client_messaging_display" />
+        tools:layout="@layout/message_display" >
+        <action
+            android:id="@+id/action_messageFragment_to_viewUserProfile"
+            app:destination="@id/viewUserProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewUserProfile"
+        android:name="com.example.hunnydates.fragments.ViewUserProfile"
+        android:label="ViewUserProfile"
+        tools:layout="@layout/view_user_profile"/>
 </navigation>

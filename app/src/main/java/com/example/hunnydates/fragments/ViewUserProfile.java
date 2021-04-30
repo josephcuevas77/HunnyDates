@@ -4,18 +4,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.hunnydates.R;
 
-public class ExampleFragment extends Fragment {
+public class ViewUserProfile extends Fragment {
 
-    public ExampleFragment() {
+    private ImageView userProfilePic;
+
+    private String clientId;
+    public ViewUserProfile() {
     }
 
-    public static EditClientFragment newInstance(String param1, String param2) {
-        EditClientFragment fragment = new EditClientFragment();
+    public static ViewUserProfile newInstance(String param1, String param2) {
+        ViewUserProfile fragment = new ViewUserProfile();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -25,12 +30,14 @@ public class ExampleFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            clientId = getArguments().getString("id");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.message_preview, container, false);
+        View view = inflater.inflate(R.layout.view_user_profile, container, false);
+        return view;
     }
 }

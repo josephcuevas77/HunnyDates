@@ -18,17 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hunnydates.R;
-import com.example.hunnydates.models.MessageModel;
 import com.example.hunnydates.models.MessagePreviewModel;
 import com.example.hunnydates.utils.CurrentUser;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
-public class SearchFragment extends Fragment {
+public class MessagePreviewFragment extends Fragment {
 
     private EditText recipientEditText;
     private Button navigateButton;
@@ -36,11 +34,11 @@ public class SearchFragment extends Fragment {
     private NavController navController;
     private FirestoreRecyclerAdapter adapter;
 
-    public SearchFragment() {
+    public MessagePreviewFragment() {
     }
 
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
+    public static MessagePreviewFragment newInstance(String param1, String param2) {
+        MessagePreviewFragment fragment = new MessagePreviewFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -56,7 +54,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_user_profile, container, false);
+        View view = inflater.inflate(R.layout.message_preview, container, false);
         initializeComponents(view);
         recyclerViewCode();
 
@@ -91,19 +89,28 @@ public class SearchFragment extends Fragment {
                 .setQuery(query, MessagePreviewModel.class)
                 .build();
 
-        adapter = new FirestoreRecyclerAdapter<MessagePreviewModel, SearchFragment.MessagePreviewViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<MessagePreviewModel, MessagePreviewFragment.MessagePreviewViewHolder>(options) {
             @NonNull
             @Override
-            public SearchFragment.MessagePreviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public MessagePreviewFragment.MessagePreviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_preview_item, parent, false);
-                return new SearchFragment.MessagePreviewViewHolder(view);
+                return new MessagePreviewFragment.MessagePreviewViewHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull SearchFragment.MessagePreviewViewHolder holder, int position, @NonNull MessagePreviewModel model) {
+            protected void onBindViewHolder(@NonNull MessagePreviewFragment.MessagePreviewViewHolder holder, int position, @NonNull MessagePreviewModel model) {
                 DocumentSnapshot snapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
                 // Picasso is a library for importing images with a PhotoURL
                 Picasso.get().load(snapshot.getString("photo-url")).into(holder.clientImageView);
+                holder.clientImageView.setClickable(true);
+                holder.clientImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", snapshot.getString("email"));
+                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_cb_nav_msg_preview_to_viewUserProfile, bundle);
+                    }
+                });
                 holder.clientTextView.setText(snapshot.getString("display-name"));
                 holder.clientTextView.setOnClickListener(new View.OnClickListener() {
                     @Override

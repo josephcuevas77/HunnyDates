@@ -10,7 +10,7 @@
         android:icon="@drawable/ic_matches_24"
         android:title="Matches" />
     <item
-        android:id="@+id/cb_nav_search"
+        android:id="@+id/cb_nav_msg_preview"
         android:icon="@drawable/ic_search_24"
         android:title="Search" />
     <item
