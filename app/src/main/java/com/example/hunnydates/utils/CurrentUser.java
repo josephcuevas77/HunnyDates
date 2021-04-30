@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -20,7 +19,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,30 +122,6 @@ public final class CurrentUser {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         return database.collection("date-plans");
-    }
-
-    public CollectionReference getBlockedUsersCollections() {
-        return document.collection("blocked-users");
-    }
-
-    public Boolean isUserBlocked(String id) {
-//        DocumentReference userDocument = getBlockedUsersCollections().document(id);
-//        Boolean isBlocked = false;
-//        userDocument.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        isBlocked = true;
-//                    } else {
-//
-//                    }
-//                }
-//            }
-//        });
-
-        return false;
     }
 
     public void callNotification(Activity activity, String title, String msg, String CHANNEL_ID){

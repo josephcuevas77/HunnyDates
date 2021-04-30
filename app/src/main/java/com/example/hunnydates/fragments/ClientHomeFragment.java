@@ -46,6 +46,8 @@ public class ClientHomeFragment extends Fragment {
     private GoogleSignInClient mGoogleSignInClient;
     private NavController navController;
     public static final String CHANNEL_ID = "channel 2";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     public ClientHomeFragment() {
         // Required empty public constructor
@@ -68,9 +70,6 @@ public class ClientHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        createNotificationChannel();
-        String msg = "Welcome back " + CurrentUser.getInstance().getDisplayName() + "!";
-        CurrentUser.getInstance().callNotification(this.getActivity(), "Welcome!", msg, CHANNEL_ID);
 
         if (getArguments() != null) {
         }

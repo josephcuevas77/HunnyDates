@@ -29,6 +29,8 @@ import com.squareup.picasso.Picasso;
 import static android.content.ContentValues.TAG;
 
 public class ViewDatesFragment extends Fragment {
+    public static final String CHANNEL_ID = "channel 2";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
@@ -47,6 +49,7 @@ public class ViewDatesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
         }
 

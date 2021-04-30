@@ -9,8 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hunnydates.R;
+import com.example.hunnydates.utils.CurrentUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class MatchesFragment extends Fragment {
+    public static final String CHANNEL_ID = "channel 2";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public MatchesFragment() {
     }
@@ -25,6 +30,7 @@ public class MatchesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
         }
     }
