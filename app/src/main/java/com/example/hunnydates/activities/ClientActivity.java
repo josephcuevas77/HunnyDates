@@ -1,5 +1,6 @@
 package com.example.hunnydates.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -13,22 +14,35 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.hunnydates.R;
 import com.example.hunnydates.utils.CurrentUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 
 public class ClientActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
     public static final String CHANNEL_ID = "channel 2";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_display);
         createNotificationChannel();
+
+        String msg = "Welcome back " + CurrentUser.getInstance().getDisplayName() + "!";
+        CurrentUser.getInstance().callNotification(ClientActivity.this, "Welcome!", msg, CHANNEL_ID);
 
         bottomNavigationView = findViewById(R.id.cd_bottom_navigation_view);
         NavHostFragment navHostFragment =

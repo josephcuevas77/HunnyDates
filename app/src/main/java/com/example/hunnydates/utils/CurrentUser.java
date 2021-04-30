@@ -4,20 +4,25 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hunnydates.R;
+import com.example.hunnydates.activities.ClientActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +44,9 @@ public final class CurrentUser {
     private String email = null;
     private Uri photoURL = null;
     private DocumentReference document = null;
+//    FirebaseFirestore db = FirebaseFirestore.getInstance();
+//    String CHANNEL_ID = "channel 2";
+
 
     private CurrentUser() {}
 
@@ -138,4 +146,5 @@ public final class CurrentUser {
 // notificationId is a unique int for each notification that you must define
         notificationManager.notify(0, builder.build());
     }
+
 }
