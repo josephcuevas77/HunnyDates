@@ -174,7 +174,8 @@ public class LoginFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_loginScreen_to_adminActivity);
-                        CurrentUser.getInstance().setDocument(database.collection("admins").document(documentID));try {
+                        CurrentUser.getInstance().setDocument(database.collection("admins").document(documentID));
+                        try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();

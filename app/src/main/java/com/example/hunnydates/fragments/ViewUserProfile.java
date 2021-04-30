@@ -4,22 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hunnydates.R;
+import com.example.hunnydates.utils.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewUserProfile extends Fragment {
 
@@ -29,6 +33,8 @@ public class ViewUserProfile extends Fragment {
     private TextView description;
     private TextView age;
     private DocumentReference userDocument;
+
+    private Button blockButton;
 
     private String clientId;
     public ViewUserProfile() {
@@ -64,6 +70,26 @@ public class ViewUserProfile extends Fragment {
         displayName = view.findViewById(R.id.vup_display_name);
         description = view.findViewById(R.id.vup_description);
         age = view.findViewById(R.id.vup_age);
+
+        blockButton = view.findViewById(R.id.vup_block_button);
+
+        blockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                blockUser();
+            }
+        });
+    }
+
+    private void blockUser() {
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("id", clientId);
+
+        CollectionReference collectionReferenceBlockedUsers = CurrentUser.getInstance().getBlockedUsersCollections();
+        collectionReferenceBlockedUsers.document(clientId).set(data);
+
+        Toast.makeText(getContext(), "Blocked User", Toast.LENGTH_SHORT).show();
     }
 
     private void getUserDocument() {
