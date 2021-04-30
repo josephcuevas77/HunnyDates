@@ -124,6 +124,10 @@ public final class CurrentUser {
         return database.collection("date-plans");
     }
 
+    public CollectionReference getBlockedUsersCollections() {
+        return document.collection("blocked-users");
+    }
+
     public void callNotification(Activity activity, String title, String msg, String CHANNEL_ID){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.applogo_foreground)
