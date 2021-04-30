@@ -5,15 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hunnydates.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class ViewUserProfile extends Fragment {
 
     private ImageView userProfilePic;
+    private TextView username;
+    private TextView displayName;
+    private TextView description;
+    private TextView age;
+    private DocumentReference userDocument;
 
     private String clientId;
     public ViewUserProfile() {
@@ -38,6 +53,42 @@ public class ViewUserProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_user_profile, container, false);
+        initializeComponents(view);
+        getUserDocument();
         return view;
+    }
+
+    private void initializeComponents(View view) {
+        userProfilePic = view.findViewById(R.id.vup_profile_icon);
+        username = view.findViewById(R.id.vup_username);
+        displayName = view.findViewById(R.id.vup_display_name);
+        description = view.findViewById(R.id.vup_description);
+        age = view.findViewById(R.id.vup_age);
+    }
+
+    private void getUserDocument() {
+        userDocument = FirebaseFirestore.getInstance().collection("clients").document(clientId);
+        userDocument.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot userDocument = task.getResult();
+                    if (userDocument.exists()) {
+                        String profileURL = userDocument.getString("profile-url");
+                        String _username = userDocument.getString("username");
+                        String _displayName = userDocument.getString("display-name");
+                        String _age = userDocument.getString("age");
+                        String _description = userDocument.getString("description");
+
+                        Picasso.get().load(profileURL).into(userProfilePic);
+
+                        username.setText(_username);
+                        displayName.setText(_displayName);
+                        age.setText(_age);
+                        description.setText(_description);
+                    }
+                }
+            }
+        });
     }
 }
