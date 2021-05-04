@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -18,8 +19,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +44,16 @@ public final class CurrentUser {
     private String email = null;
     private Uri photoURL = null;
     private DocumentReference document = null;
+
+    public List<String> getBlockedUsers() {
+        return blockedUsers;
+    }
+
+    public void setBlockedUsers(List<String> blockedUsers) {
+        this.blockedUsers = blockedUsers;
+    }
+
+    private List<String> blockedUsers = new ArrayList<>();
 
     private CurrentUser() {}
 
@@ -101,6 +116,20 @@ public final class CurrentUser {
             }
         });
 
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        CollectionReference test = database.collection("clients").document(CurrentUser.getInstance().getEmail())
+                .collection("blocked-users");
+        test.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        blockedUsers.add(document.getId());
+                    }
+                }
+            }
+        });
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -126,6 +155,14 @@ public final class CurrentUser {
 
     public CollectionReference getBlockedUsersCollections() {
         return document.collection("blocked-users");
+    }
+
+    public boolean isUserBlocked(String userID) {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference test = database.collection("clients").document(CurrentUser.getInstance().getEmail()).collection("blocked-users")
+                .document(userID);
+
+        return false;
     }
 
     public void callNotification(Activity activity, String title, String msg, String CHANNEL_ID){

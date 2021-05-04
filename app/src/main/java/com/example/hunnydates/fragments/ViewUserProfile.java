@@ -76,7 +76,9 @@ public class ViewUserProfile extends Fragment {
         blockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                blockUser();
+                boolean test = CurrentUser.getInstance().isUserBlocked(clientId);
+                Toast.makeText(getContext(), "isUserBlocked " + test, Toast.LENGTH_SHORT).show();
+                //blockUser();
             }
         });
     }
