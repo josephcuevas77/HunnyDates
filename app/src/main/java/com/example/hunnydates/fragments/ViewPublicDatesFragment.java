@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -94,6 +95,15 @@ public class ViewPublicDatesFragment extends Fragment {
                 holder.rating.setText("Rating: " + model.getRating_count());
                 Picasso.get().load(model.getImage_url()).into(holder.locationImageView);
                 Picasso.get().load(model.getUser_profile_image_url()).into(holder.profileImageView);
+                holder.profileImageView.setClickable(true);
+                holder.profileImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", model.getId());
+                        NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_cb_nav_public_dates_to_viewUserProfile, bundle);
+                    }
+                });
                 holder.voteUpImageView.setClickable(true);
                 holder.voteUpImageView.setOnClickListener(new View.OnClickListener() {
                     DatePlanPublicModel d = new DatePlanPublicModel(

@@ -17,7 +17,11 @@
         android:id="@+id/cb_nav_public_dates"
         android:name="com.example.hunnydates.fragments.ViewPublicDatesFragment"
         android:label="ViewPublicDatesFragment"
-        tools:layout="@layout/view_all_date_plans" />
+        tools:layout="@layout/view_all_date_plans" >
+        <action
+            android:id="@+id/action_cb_nav_public_dates_to_viewUserProfile"
+            app:destination="@id/viewUserProfile" />
+    </fragment>
     <fragment
         android:id="@+id/cb_nav_create"
         android:name="com.example.hunnydates.fragments.CreateDateFragment"
@@ -59,5 +63,9 @@
         android:id="@+id/viewUserProfile"
         android:name="com.example.hunnydates.fragments.ViewUserProfile"
         android:label="ViewUserProfile"
-        tools:layout="@layout/view_user_profile"/>
+        tools:layout="@layout/view_user_profile">
+        <action
+            android:id="@+id/action_viewUserProfile_to_messageFragment"
+            app:destination="@id/messageFragment" />
+    </fragment>
 </navigation>

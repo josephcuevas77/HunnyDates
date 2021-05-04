@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +30,10 @@ public class ViewUserProfile extends Fragment {
     private TextView description;
     private TextView age;
     private DocumentReference userDocument;
+    private Button messageUser;
 
     private String clientId;
+    private String profileImageURL;
     public ViewUserProfile() {
     }
 
@@ -53,8 +56,8 @@ public class ViewUserProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_user_profile, container, false);
-        initializeComponents(view);
         getUserDocument();
+        initializeComponents(view);
         return view;
     }
 
@@ -64,6 +67,17 @@ public class ViewUserProfile extends Fragment {
         displayName = view.findViewById(R.id.vup_display_name);
         description = view.findViewById(R.id.vup_description);
         age = view.findViewById(R.id.vup_age);
+        messageUser = view.findViewById(R.id.vup_message_btn);
+
+        messageUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("recipient", clientId);
+                bundle.putString("photo-url", profileImageURL);
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_viewUserProfile_to_messageFragment, bundle);
+            }
+        });
     }
 
     private void getUserDocument() {
@@ -81,7 +95,7 @@ public class ViewUserProfile extends Fragment {
                         String _description = userDocument.getString("description");
 
                         Picasso.get().load(profileURL).into(userProfilePic);
-
+                        profileImageURL = profileURL;
                         username.setText(_username);
                         displayName.setText(_displayName);
                         age.setText(_age);
