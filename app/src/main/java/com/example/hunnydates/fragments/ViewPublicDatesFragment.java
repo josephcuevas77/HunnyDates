@@ -78,7 +78,14 @@ public class ViewPublicDatesFragment extends Fragment {
         for(Map.Entry<String,Boolean> entry : CurrentUser.getInstance().getBlockedUsers().entrySet()) {
             temp.add(entry.getKey());
         }
-        Query query = CurrentUser.getInstance().getDatePlansCollections().whereNotIn("id", temp);
+
+        Query query;
+        if (temp.isEmpty()) {
+            query = CurrentUser.getInstance().getDatePlansCollections();
+        }
+        else {
+            query = CurrentUser.getInstance().getDatePlansCollections().whereNotIn("id", temp);
+        }
 
         // RecyclerOptions
         FirestoreRecyclerOptions<DatePlanPublicModel> options = new FirestoreRecyclerOptions.Builder<DatePlanPublicModel>()
