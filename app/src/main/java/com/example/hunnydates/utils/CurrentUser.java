@@ -44,15 +44,6 @@ public final class CurrentUser {
     private String email = null;
     private Uri photoURL = null;
     private DocumentReference document = null;
-
-    public List<String> getBlockedUsers() {
-        return blockedUsers;
-    }
-
-    public void setBlockedUsers(List<String> blockedUsers) {
-        this.blockedUsers = blockedUsers;
-    }
-
     private List<String> blockedUsers = new ArrayList<>();
 
     private CurrentUser() {}
@@ -62,6 +53,14 @@ public final class CurrentUser {
     }
 
     public Map<String, String> getProfileInfoMap() { return profileInfoMap; }
+
+    public List<String> getBlockedUsers() {
+        return blockedUsers;
+    }
+
+    public void setBlockedUsers(List<String> blockedUsers) {
+        this.blockedUsers = blockedUsers;
+    }
 
     public String getUsername() {
         return profileInfoMap.get("username");
@@ -116,10 +115,15 @@ public final class CurrentUser {
             }
         });
 
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        CollectionReference test = database.collection("clients").document(CurrentUser.getInstance().getEmail())
-                .collection("blocked-users");
-        test.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        blockedUsers.clear();
+        CollectionReference blocks = document.collection("blocked-users");
+        blocks.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -155,14 +159,6 @@ public final class CurrentUser {
 
     public CollectionReference getBlockedUsersCollections() {
         return document.collection("blocked-users");
-    }
-
-    public boolean isUserBlocked(String userID) {
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        DocumentReference test = database.collection("clients").document(CurrentUser.getInstance().getEmail()).collection("blocked-users")
-                .document(userID);
-
-        return false;
     }
 
     public void callNotification(Activity activity, String title, String msg, String CHANNEL_ID){

@@ -70,7 +70,7 @@ public class ViewPublicDatesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.vadp_recycler_view);
 
         // Query
-        Query query = CurrentUser.getInstance().getDatePlansCollections();
+        Query query = CurrentUser.getInstance().getDatePlansCollections().whereNotIn("id", CurrentUser.getInstance().getBlockedUsers());
 
         // RecyclerOptions
         FirestoreRecyclerOptions<DatePlanPublicModel> options = new FirestoreRecyclerOptions.Builder<DatePlanPublicModel>()
