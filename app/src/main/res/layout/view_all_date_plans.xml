@@ -6,21 +6,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/vdp_header_tv"
+        android:id="@+id/vadp_header_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Date Plans"
+        android:text="All Date Plans"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vdp_recycler_view"
+        android:id="@+id/vadp_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vdp_header_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/vadp_header_tv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

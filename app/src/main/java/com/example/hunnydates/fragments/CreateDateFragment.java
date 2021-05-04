@@ -135,6 +135,7 @@ public class CreateDateFragment extends Fragment {
         dateData.put("location", placeSelected.getText().toString());
         dateData.put("rating_count", 0);
         dateData.put("image_url", url);
+        dateData.put("user_profile_image_url", CurrentUser.getInstance().getPhotoURL());
 
         CollectionReference collectionReferenceDatePlans = CurrentUser.getInstance().getDatePlansCollections();
         collectionReferenceDatePlans.add(dateData);

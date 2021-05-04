@@ -65,7 +65,10 @@ public class MessageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             recipientEmail = getArguments().getString("recipient");
-            recipientPhotoURL = getArguments().getString("photo-url");
+            if(getArguments().containsKey("photo-url"))
+                recipientPhotoURL = getArguments().getString("photo-url");
+            else
+                recipientPhotoURL = "DEFAULT";
         }
     }
 
@@ -82,7 +85,8 @@ public class MessageFragment extends Fragment {
     private void initializeComponents(View view) {
         clientProfilePicture = view.findViewById(R.id.cmd_profile_iv);
         // Picasso is a library for importing images with a PhotoURL
-        Picasso.get().load(recipientPhotoURL).into(clientProfilePicture);
+        if(!recipientPhotoURL.equals("DEFAULT"))
+            Picasso.get().load(recipientPhotoURL).into(clientProfilePicture);
         header = view.findViewById(R.id.cmd_header_tv);
         messageEditText = view.findViewById(R.id.cmd_message_et);
         recyclerView = view.findViewById(R.id.cmd_recycler_view);
