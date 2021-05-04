@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class CreateDateFragment extends Fragment {
     private final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private EditText dateTitle;
     private EditText dateDesc;
+    private Switch privacySwitch;
     private Button createDate;
     private Button searchButton;
     private TextView placeSelected;
@@ -111,7 +113,7 @@ public class CreateDateFragment extends Fragment {
             public void onClick(View view){
                 startAutocompleteActivity(view);
             }
-            });
+        });
 
         return view;
     }
@@ -123,6 +125,7 @@ public class CreateDateFragment extends Fragment {
         searchButton = view.findViewById(R.id.dp_search_button);
         placeSelected = view.findViewById(R.id.dp_place_selected);
         placeImage = view.findViewById(R.id.dp_image_view);
+        privacySwitch = view.findViewById(R.id.dp_privacy_switch);
     }
 
     private void postDateToFirestore() {
@@ -135,6 +138,7 @@ public class CreateDateFragment extends Fragment {
         dateData.put("location", placeSelected.getText().toString());
         dateData.put("rating_count", 0);
         dateData.put("image_url", url);
+        dateData.put("isPrivate",privacySwitch.isChecked());
         dateData.put("user_profile_image_url", CurrentUser.getInstance().getPhotoURL());
 
         CollectionReference collectionReferenceDatePlans = CurrentUser.getInstance().getDatePlansCollections();

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/dp_title_tv"
@@ -47,10 +47,10 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_max="300dp"
         app:layout_constraintHeight_max="175dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dp_place_selected" />
+        app:layout_constraintTop_toBottomOf="@id/dp_place_selected"
+        app:layout_constraintWidth_max="300dp" />
 
     <Button
         android:id="@+id/dp_search_button"
@@ -83,6 +83,14 @@
         app:layout_constraintStart_toStartOf="@+id/dp_description_tv"
         app:layout_constraintTop_toBottomOf="@+id/dp_description_tv" />
 
+    <Switch
+        android:id="@+id/dp_privacy_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/dp_description_et"
+        app:layout_constraintStart_toStartOf="@+id/dp_description_et"
+        app:layout_constraintTop_toBottomOf="@+id/dp_description_et" />
+
     <Button
         android:id="@+id/dp_create_button"
         android:layout_width="wrap_content"
@@ -90,6 +98,24 @@
         android:text="Create Date Plan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dp_description_et" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_privacy_switch" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="public"
+        app:layout_constraintBottom_toBottomOf="@+id/dp_privacy_switch"
+        app:layout_constraintEnd_toStartOf="@+id/dp_privacy_switch"
+        app:layout_constraintTop_toTopOf="@+id/dp_privacy_switch" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="private"
+        app:layout_constraintBottom_toBottomOf="@+id/dp_privacy_switch"
+        app:layout_constraintStart_toEndOf="@+id/dp_privacy_switch"
+        app:layout_constraintTop_toTopOf="@+id/dp_privacy_switch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
