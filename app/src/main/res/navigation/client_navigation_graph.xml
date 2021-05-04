@@ -14,10 +14,10 @@
             app:destination="@id/editClientFragment" />
     </fragment>
     <fragment
-        android:id="@+id/cb_nav_matches"
-        android:name="com.example.hunnydates.fragments.MatchesFragment"
-        android:label="MatchesFragment"
-        tools:layout="@layout/view_matches" />
+        android:id="@+id/cb_nav_public_dates"
+        android:name="com.example.hunnydates.fragments.ViewPublicDatesFragment"
+        android:label="ViewPublicDatesFragment"
+        tools:layout="@layout/view_all_date_plans" />
     <fragment
         android:id="@+id/cb_nav_create"
         android:name="com.example.hunnydates.fragments.CreateDateFragment"

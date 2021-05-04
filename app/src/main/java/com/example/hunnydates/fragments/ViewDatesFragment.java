@@ -91,7 +91,7 @@ public class ViewDatesFragment extends Fragment {
                 holder.title.setText(model.getTitle());
                 holder.description.setText(model.getDescription());
                 holder.location.setText(model.getLocation());
-                holder.user.setText(model.getUser());
+//                holder.user.setText(model.getUser());
                 holder.rating.setText("Rating: " + model.getRating_count());
                 Picasso.get().load(model.getImage_url()).into(holder.imageView);
                 holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -113,62 +113,62 @@ public class ViewDatesFragment extends Fragment {
                                 });
                     }
                 });
-                holder.upButton.setOnClickListener(new View.OnClickListener() {
-                    DatePlanModel d = new DatePlanModel(
-                            model.getUser(),
-                            model.getTitle(),
-                            model.getDescription(),
-                            model.getLocation(),
-                            model.getRating_count() + 1,
-                            model.getId(),
-                            model.getImage_url()
-                    );
-
-                    public void onClick(View view) {
-                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
-                        .set(d)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Document successfully edited!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error editing document", e);
-                            }
-                        });
-                    }
-                });
-                holder.downButton.setOnClickListener(new View.OnClickListener() {
-                    DatePlanModel d = new DatePlanModel(
-                            model.getUser(),
-                            model.getTitle(),
-                            model.getDescription(),
-                            model.getLocation(),
-                            model.getRating_count() - 1,
-                            model.getId(),
-                            model.getImage_url()
-                    );
-
-                    public void onClick(View view) {
-                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
-                                .set(d)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "Document successfully edited!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error editing document", e);
-                                    }
-                                });
-                    }
-                });
+//                holder.upButton.setOnClickListener(new View.OnClickListener() {
+//                    DatePlanModel d = new DatePlanModel(
+//                            model.getUser(),
+//                            model.getTitle(),
+//                            model.getDescription(),
+//                            model.getLocation(),
+//                            model.getRating_count() + 1,
+//                            model.getId(),
+//                            model.getImage_url()
+//                    );
+//
+//                    public void onClick(View view) {
+//                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
+//                        .set(d)
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+//                                Log.d(TAG, "Document successfully edited!");
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Log.w(TAG, "Error editing document", e);
+//                            }
+//                        });
+//                    }
+//                });
+//                holder.downButton.setOnClickListener(new View.OnClickListener() {
+//                    DatePlanModel d = new DatePlanModel(
+//                            model.getUser(),
+//                            model.getTitle(),
+//                            model.getDescription(),
+//                            model.getLocation(),
+//                            model.getRating_count() - 1,
+//                            model.getId(),
+//                            model.getImage_url()
+//                    );
+//
+//                    public void onClick(View view) {
+//                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
+//                                .set(d)
+//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void aVoid) {
+//                                        Log.d(TAG, "Document successfully edited!");
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.w(TAG, "Error editing document", e);
+//                                    }
+//                                });
+//                    }
+//                });
             }
         };
 
@@ -182,11 +182,11 @@ public class ViewDatesFragment extends Fragment {
         private TextView title;
         private TextView description;
         private TextView location;
-        private TextView user;
+//        private TextView user;
         private TextView rating;
         private Button deleteButton;
-        private Button upButton;
-        private Button downButton;
+//        private Button upButton;
+//        private Button downButton;
         private ImageView imageView;
 
         public DatePlanViewHolder(@NonNull View itemView) {
@@ -195,9 +195,9 @@ public class ViewDatesFragment extends Fragment {
             description = itemView.findViewById(R.id.dpi_desc_tv);
             location = itemView.findViewById(R.id.dpi_location_tv);
             deleteButton = itemView.findViewById(R.id.dpi_delete_btn);
-            upButton = itemView.findViewById(R.id.dpi_up_button);
-            downButton = itemView.findViewById(R.id.dpi_down_button);
-            user = itemView.findViewById(R.id.dpi_user_tv);
+//            upButton = itemView.findViewById(R.id.dpi_up_button);
+//            downButton = itemView.findViewById(R.id.dpi_down_button);
+//            user = itemView.findViewById(R.id.dpi_user_tv);
             rating = itemView.findViewById(R.id.dpi_rating_tv);
             imageView = itemView.findViewById(R.id.dpi_imageView);
         }
