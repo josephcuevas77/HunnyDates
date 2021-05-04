@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/cmd_header_tv"
+        android:id="@+id/vdp_header_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date Plans"
