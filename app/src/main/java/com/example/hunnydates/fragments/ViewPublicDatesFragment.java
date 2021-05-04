@@ -27,6 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import static android.content.ContentValues.TAG;
 
 public class ViewPublicDatesFragment extends Fragment {
@@ -70,7 +74,11 @@ public class ViewPublicDatesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.vadp_recycler_view);
 
         // Query
-        Query query = CurrentUser.getInstance().getDatePlansCollections().whereNotIn("id", CurrentUser.getInstance().getBlockedUsers());
+        List<String> temp = new ArrayList<>();
+        for(Map.Entry<String,Boolean> entry : CurrentUser.getInstance().getBlockedUsers().entrySet()) {
+            temp.add(entry.getKey());
+        }
+        Query query = CurrentUser.getInstance().getDatePlansCollections().whereNotIn("id", temp);
 
         // RecyclerOptions
         FirestoreRecyclerOptions<DatePlanPublicModel> options = new FirestoreRecyclerOptions.Builder<DatePlanPublicModel>()

@@ -26,6 +26,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class MessagePreviewFragment extends Fragment {
 
     private EditText recipientEditText;
@@ -81,8 +85,21 @@ public class MessagePreviewFragment extends Fragment {
 
     private void recyclerViewCode() {
         // Query
-        Query query = CurrentUser.getInstance().getDocument()
-                .collection("messages");
+        List<String> temp = new ArrayList<>();
+        for(Map.Entry<String,Boolean> entry : CurrentUser.getInstance().getBlockedUsers().entrySet()) {
+            if(entry.getValue() == false)
+                temp.add(entry.getKey());
+        }
+        Query query;
+        if(temp.isEmpty()) {
+            query = CurrentUser.getInstance().getDocument()
+                    .collection("messages");
+        }
+        else {
+            query = CurrentUser.getInstance().getDocument()
+                    .collection("messages")
+                    .whereNotIn("email", temp);
+        }
 
         // RecyclerOptions
         FirestoreRecyclerOptions<MessagePreviewModel> options = new FirestoreRecyclerOptions.Builder<MessagePreviewModel>()
@@ -152,5 +169,4 @@ public class MessagePreviewFragment extends Fragment {
         super.onStart();
         adapter.startListening();
     }
-
 }

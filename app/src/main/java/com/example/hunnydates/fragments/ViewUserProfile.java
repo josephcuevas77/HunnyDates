@@ -94,8 +94,8 @@ public class ViewUserProfile extends Fragment {
             }
         });
 
-        List<String> blockUsers = CurrentUser.getInstance().getBlockedUsers();
-        if (blockUsers.contains(clientId)) {
+        Map<String, Boolean> blockUsers = CurrentUser.getInstance().getBlockedUsers();
+        if (blockUsers.containsKey(clientId)) {
             blockUserButton.setText("Unblock");
         }
 
@@ -109,8 +109,8 @@ public class ViewUserProfile extends Fragment {
     }
 
     private void blockUser() {
-        List<String> blockUsers = CurrentUser.getInstance().getBlockedUsers();
-        if (blockUsers.contains(clientId)) {
+        Map<String, Boolean> blockUsers = CurrentUser.getInstance().getBlockedUsers();
+        if (blockUsers.containsKey(clientId)) {
             blockUserButton.setText("Unblock");
 
             CurrentUser.getInstance().getDocument().collection("blocked-users").document(clientId)

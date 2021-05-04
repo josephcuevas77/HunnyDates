@@ -44,7 +44,7 @@ public final class CurrentUser {
     private String email = null;
     private Uri photoURL = null;
     private DocumentReference document = null;
-    private List<String> blockedUsers = new ArrayList<>();
+    private Map<String, Boolean> blockedUsers = new HashMap<>();
 
     private CurrentUser() {}
 
@@ -54,11 +54,11 @@ public final class CurrentUser {
 
     public Map<String, String> getProfileInfoMap() { return profileInfoMap; }
 
-    public List<String> getBlockedUsers() {
+    public Map<String, Boolean> getBlockedUsers() {
         return blockedUsers;
     }
 
-    public void setBlockedUsers(List<String> blockedUsers) {
+    public void setBlockedUsers(Map<String, Boolean> blockedUsers) {
         this.blockedUsers = blockedUsers;
     }
 
@@ -128,7 +128,7 @@ public final class CurrentUser {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        blockedUsers.add(document.getId());
+                        blockedUsers.put(document.getId(), document.getBoolean("didBlock"));
                     }
                 }
             }
