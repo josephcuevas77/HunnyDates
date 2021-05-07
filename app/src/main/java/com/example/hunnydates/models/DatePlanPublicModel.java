@@ -10,11 +10,20 @@ public class DatePlanPublicModel {
     private String user_profile_image_url;
 
     private String image_url;
+    private Boolean is_private;
     private int rating_count;
 
     private DatePlanPublicModel() {}
 
-    public DatePlanPublicModel(String user, String title, String description, String location, int ratingsCount, String id, String user_profile_image_url, String url) {
+    public Boolean getIs_Private() {
+        return is_private;
+    }
+
+    public void getIs_Private(Boolean is_private) {
+        is_private = is_private;
+    }
+
+    public DatePlanPublicModel(String user, String title, String description, String location, int ratingsCount, String id, String user_profile_image_url, String url, Boolean is_private) {
         this.user = user;
         this.title = title;
         this.description = description;
@@ -23,6 +32,7 @@ public class DatePlanPublicModel {
         this.rating_count = ratingsCount;
         this.id = id;
         this.image_url = url;
+        this.is_private = is_private;
     }
 
     public String getId() {

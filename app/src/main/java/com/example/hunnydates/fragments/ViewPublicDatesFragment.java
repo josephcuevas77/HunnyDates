@@ -81,10 +81,13 @@ public class ViewPublicDatesFragment extends Fragment {
 
         Query query;
         if (temp.isEmpty()) {
-            query = CurrentUser.getInstance().getDatePlansCollections();
+            query = CurrentUser.getInstance().getDatePlansCollections()
+                .whereEqualTo("is_private", false);
         }
         else {
-            query = CurrentUser.getInstance().getDatePlansCollections().whereNotIn("id", temp);
+            query = CurrentUser.getInstance().getDatePlansCollections()
+                    .whereNotIn("id", temp)
+                    .whereEqualTo("is_private", false);
         }
 
         // RecyclerOptions
@@ -129,7 +132,9 @@ public class ViewPublicDatesFragment extends Fragment {
                             model.getRating_count() + 1,
                             model.getId(),
                             model.getUser_profile_image_url(),
-                            model.getImage_url()
+                            model.getImage_url(),
+                            model.getIs_Private()
+
                     );
 
                     public void onClick(View view) {
@@ -159,7 +164,8 @@ public class ViewPublicDatesFragment extends Fragment {
                             model.getRating_count() - 1,
                             model.getId(),
                             model.getUser_profile_image_url(),
-                            model.getImage_url()
+                            model.getImage_url(),
+                            model.getIs_Private()
                     );
 
                     public void onClick(View view) {
