@@ -42,7 +42,7 @@ import static android.app.Activity.RESULT_CANCELED;
 
 public class CreateDateFragment extends Fragment {
 
-    private static final String API_KEY = "AIzaSyDk1EqoqRzGwNDEVPojmXsDklfbLnx_H9E";
+    private static final String API_KEY = "INSERT API KEY HERE";
 
     private static final String TAG = "placesAPI";
     private static final String TAG1 = "bitmap";
