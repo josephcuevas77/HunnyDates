@@ -23,6 +23,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
@@ -124,65 +125,18 @@ public class ViewPublicDatesFragment extends Fragment {
                 });
                 holder.voteUpImageView.setClickable(true);
                 holder.voteUpImageView.setOnClickListener(new View.OnClickListener() {
-                    DatePlanPublicModel d = new DatePlanPublicModel(
-                            model.getUser(),
-                            model.getTitle(),
-                            model.getDescription(),
-                            model.getLocation(),
-                            model.getRating_count() + 1,
-                            model.getId(),
-                            model.getUser_profile_image_url(),
-                            model.getImage_url(),
-                            model.getIs_Private()
-
-                    );
-
                     public void onClick(View view) {
-                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
-                                .set(d)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "Document successfully edited!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error editing document", e);
-                                    }
-                                });
+                        getSnapshots().getSnapshot(position).getReference().update("rating_count", FieldValue.increment(1));
+                        model.setRating_count(model.getRating_count()+1);
+                        holder.rating.setText("Rating: " + model.getRating_count());
                     }
                 });
                 holder.voteDownImageView.setClickable(true);
                 holder.voteDownImageView.setOnClickListener(new View.OnClickListener() {
-                    DatePlanPublicModel d = new DatePlanPublicModel(
-                            model.getUser(),
-                            model.getTitle(),
-                            model.getDescription(),
-                            model.getLocation(),
-                            model.getRating_count() - 1,
-                            model.getId(),
-                            model.getUser_profile_image_url(),
-                            model.getImage_url(),
-                            model.getIs_Private()
-                    );
-
                     public void onClick(View view) {
-                        CurrentUser.getInstance().getDatePlansCollections().document(snapshot.getId())
-                                .set(d)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "Document successfully edited!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error editing document", e);
-                                    }
-                                });
+                        getSnapshots().getSnapshot(position).getReference().update("rating_count", FieldValue.increment(-1));
+                        model.setRating_count(model.getRating_count()-1);
+                        holder.rating.setText("Rating: " + model.getRating_count());
                     }
                 });
             }
