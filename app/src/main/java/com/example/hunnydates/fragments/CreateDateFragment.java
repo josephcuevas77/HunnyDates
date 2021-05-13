@@ -91,7 +91,7 @@ public class CreateDateFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-        Places.initialize(getActivity().getApplicationContext(), "INSERT API KEY HERE");
+        Places.initialize(getActivity().getApplicationContext(), API_KEY);
     }
 
     @Override
